@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Negotiation Power Diagnostic | Arete Advisors</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand: #264550;
+            --brand-light: #365a68;
+            --brand-dark: #1a3640;
+            --brand-faint: #eef1f2;
+            --black: #000000;
+            --gray-90: #1a1a1a;
+            --gray-70: #3d3d3f;
+            --gray-50: #5e5e60;
+            --gray-30: #b0b0b2;
+            --gray-20: #d1d3d4;
+            --gray-10: #eef1f2;
+            --white: #ffffff;
+            --red: #991b1b;
+            --orange: #9a3412;
+            --amber: #854d0e;
+            --green: #166534;
+            --font: 'Lato', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font);
+            background: var(--gray-10);
+            color: var(--gray-70);
+            line-height: 1.6;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .wrap {
+            max-width: 620px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .screen { display: none; }
+        .screen.active { display: flex; flex-direction: column; flex: 1; }
+
+        /* ---- TOP BAR ---- */
+        .topbar {
+            margin: 0 -1.5rem;
+            padding: 0.875rem 1.5rem;
+            border-bottom: 2px solid var(--brand);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--white);
+        }
+
+        .topbar-title {
+            font-weight: 900;
+            font-size: 0.75rem;
+            color: var(--brand);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .topbar-mark {
+            font-size: 0.6875rem;
+            font-weight: 700;
+            color: var(--gray-50);
+            letter-spacing: 0.04em;
+        }
+
+        /* ---- PROGRESS ---- */
+        .progress {
+            display: none;
+            margin: 0 -1.5rem;
+            padding: 0.625rem 1.5rem;
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-20);
+        }
+        .progress.on { display: block; }
+
+        .progress-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.35rem;
+        }
+
+        .progress-dim {
+            font-size: 0.6875rem;
+            font-weight: 900;
+            color: var(--brand);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .progress-n {
+            font-size: 0.6875rem;
+            font-weight: 400;
+            color: var(--gray-50);
+        }
+
+        .progress-track {
+            height: 2px;
+            background: var(--gray-20);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--brand);
+            transition: width 0.35s ease;
+            width: 0%;
+        }
+
+        /* ---- INTRO ---- */
+        .intro {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2.5rem 0 2rem;
+        }
+
+        .intro-lead {
+            font-size: 1.5rem;
+            font-weight: 900;
+            line-height: 1.35;
+            color: var(--black);
+            margin-bottom: 1rem;
+            max-width: 480px;
+        }
+
+        .intro-body {
+            font-size: 0.9375rem;
+            line-height: 1.65;
+            color: var(--gray-70);
+            margin-bottom: 1.5rem;
+        }
+
+        .intro-meta {
+            font-size: 0.8125rem;
+            color: var(--gray-50);
+            padding: 1rem 1.25rem;
+            background: var(--white);
+            border-left: 3px solid var(--brand);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .intro-meta span { display: block; }
+
+        .scale-label {
+            font-size: 0.6875rem;
+            font-weight: 900;
+            color: var(--gray-50);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.5rem;
+        }
+
+        .scale-row {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 2.5rem;
+        }
+
+        .scale-chip {
+            flex: 1;
+            text-align: center;
+            padding: 0.75rem 0.25rem 0.625rem;
+            background: var(--white);
+            border: 1px solid var(--gray-20);
+        }
+
+        .scale-chip .n {
+            display: block;
+            font-weight: 900;
+            font-size: 1.125rem;
+            color: var(--brand);
+            margin-bottom: 0.125rem;
+        }
+
+        .scale-chip .t {
+            font-size: 0.625rem;
+            font-weight: 700;
+            color: var(--gray-50);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        /* ---- BUTTONS ---- */
+        .btn {
+            font-family: var(--font);
+            font-weight: 700;
+            font-size: 0.9375rem;
+            padding: 0.9375rem 2rem;
+            cursor: pointer;
+            border: none;
+            transition: background 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-brand {
+            background: var(--brand);
+            color: var(--white);
+        }
+        .btn-brand:hover { background: var(--brand-dark); }
+
+        .btn-full { display: block; width: 100%; }
+
+        .btn-back {
+            background: none;
+            border: none;
+            font-family: var(--font);
+            font-size: 0.8125rem;
+            font-weight: 400;
+            color: var(--gray-50);
+            cursor: pointer;
+            padding: 0.5rem 0;
+        }
+        .btn-back:hover { color: var(--brand); }
+
+        /* ---- QUESTION ---- */
+        .q-wrap {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 1.5rem 0;
+        }
+
+        .q-text {
+            font-size: 1.1875rem;
+            font-weight: 400;
+            line-height: 1.55;
+            color: var(--black);
+            margin-bottom: 2rem;
+        }
+
+        .opts {
+            display: flex;
+            flex-direction: column;
+            gap: 0.375rem;
+        }
+
+        .opt {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.0625rem 1.25rem;
+            background: var(--white);
+            border: 2px solid var(--gray-20);
+            cursor: pointer;
+            transition: all 0.12s ease;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        .opt:hover { border-color: var(--brand-light); }
+
+        .opt.picked {
+            border-color: var(--brand);
+            background: var(--brand);
+        }
+
+        .opt-n {
+            font-weight: 900;
+            font-size: 1.0625rem;
+            color: var(--brand);
+            width: 1.5rem;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .opt.picked .opt-n { color: var(--white); }
+
+        .opt-t {
+            font-size: 0.9375rem;
+            color: var(--gray-70);
+        }
+        .opt.picked .opt-t { color: var(--white); font-weight: 700; }
+
+        .q-nav {
+            padding: 1rem 0;
+            margin-top: auto;
+        }
+
+        /* ---- LOADING ---- */
+        .ld {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spin {
+            width: 32px;
+            height: 32px;
+            border: 3px solid var(--gray-20);
+            border-top-color: var(--brand);
+            border-radius: 50%;
+            animation: sp 0.7s linear infinite;
+            margin-bottom: 1rem;
+        }
+        @keyframes sp { to { transform: rotate(360deg); } }
+
+        .ld p { font-size: 0.8125rem; color: var(--gray-50); }
+
+        /* ---- RESULTS ---- */
+        .res { flex: 1; padding: 1.5rem 0; }
+
+        .res-label {
+            font-size: 0.6875rem;
+            font-weight: 900;
+            color: var(--gray-50);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-align: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .pos-card {
+            background: var(--white);
+            border: 1px solid var(--gray-20);
+            padding: 2.5rem 1.5rem 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .pos-val {
+            font-weight: 900;
+            font-size: 2.75rem;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.125rem;
+        }
+
+        .pos-score {
+            font-size: 0.8125rem;
+            font-weight: 400;
+            color: var(--gray-50);
+            letter-spacing: 0.02em;
+            margin-bottom: 1.75rem;
+        }
+
+        .spec {
+            display: flex;
+            gap: 2px;
+            margin-bottom: 1.75rem;
+        }
+
+        .sp {
+            flex: 1;
+            padding: 0.625rem 0.125rem;
+            text-align: center;
+            font-size: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: var(--white);
+            opacity: 0.3;
+            transition: all 0.4s ease;
+        }
+
+        .sp.on {
+            opacity: 1;
+            padding: 0.75rem 0.125rem;
+        }
+
+        .sp.v { background: var(--red); }
+        .sp.e { background: var(--orange); }
+        .sp.c { background: var(--amber); }
+        .sp.f { background: var(--green); }
+        .sp.s { background: var(--brand); }
+        .sp.d { background: var(--brand-dark); }
+
+        .pos-exp {
+            font-size: 0.9375rem;
+            line-height: 1.65;
+            color: var(--gray-70);
+            text-align: left;
+        }
+
+        /* ---- GATE ---- */
+        .gate {
+            background: var(--white);
+            border: 1px solid var(--gray-20);
+            padding: 1.75rem 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .gate h3 {
+            font-weight: 900;
+            font-size: 1rem;
+            color: var(--black);
+            margin-bottom: 0.375rem;
+        }
+
+        .gate p {
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--gray-70);
+            margin-bottom: 1.25rem;
+        }
+
+        .gate-form {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .gate-email {
+            flex: 1;
+            font-family: var(--font);
+            font-size: 0.9375rem;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--gray-20);
+            outline: none;
+            background: var(--gray-10);
+        }
+        .gate-email:focus { border-color: var(--brand); }
+        .gate-email::placeholder { color: var(--gray-30); }
+
+        .gate-btn {
+            font-family: var(--font);
+            font-weight: 700;
+            font-size: 0.8125rem;
+            padding: 0.75rem 1.25rem;
+            background: var(--brand);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+            letter-spacing: 0.02em;
+        }
+        .gate-btn:hover { background: var(--brand-dark); }
+
+        .gate-err {
+            font-size: 0.75rem;
+            color: var(--red);
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .gate-skip {
+            display: block;
+            text-align: right;
+            margin-top: 0.625rem;
+        }
+
+        .gate-skip a {
+            font-size: 0.6875rem;
+            color: var(--gray-30);
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .gate-skip a:hover { color: var(--gray-50); }
+
+        /* ---- BREAKDOWN ---- */
+        .bd { display: none; }
+        .bd.on { display: block; }
+
+        .bd-label {
+            font-size: 0.6875rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--gray-50);
+            margin-bottom: 0.75rem;
+        }
+
+        .dr {
+            background: var(--white);
+            border: 1px solid var(--gray-20);
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.375rem;
+            cursor: pointer;
+            transition: border-color 0.12s ease;
+        }
+        .dr:hover { border-color: var(--brand-light); }
+
+        .dr-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.4rem;
+        }
+
+        .dr-name {
+            font-weight: 900;
+            font-size: 0.8125rem;
+            color: var(--black);
+        }
+
+        .dr-tag {
+            font-size: 0.5625rem;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            color: var(--white);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .dr-track {
+            height: 3px;
+            background: var(--gray-10);
+        }
+
+        .dr-fill {
+            height: 100%;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .dr-detail {
+            display: none;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--gray-20);
+        }
+
+        .dr.open .dr-detail { display: block; }
+
+        .dr-detail p {
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--gray-70);
+            margin-bottom: 0.5rem;
+        }
+
+        .dr-detail .act {
+            font-size: 0.875rem;
+            font-style: italic;
+            color: var(--brand);
+        }
+
+        /* ---- CTA ---- */
+        .cta {
+            border-left: 3px solid var(--brand);
+            background: var(--white);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .cta h3 {
+            font-weight: 900;
+            font-size: 0.9375rem;
+            color: var(--black);
+            margin-bottom: 0.375rem;
+        }
+
+        .cta p {
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--gray-70);
+            margin-bottom: 1.25rem;
+        }
+
+        .cta a {
+            display: inline-block;
+            font-family: var(--font);
+            font-weight: 700;
+            font-size: 0.875rem;
+            padding: 0.8125rem 1.75rem;
+            background: var(--brand);
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: 0.02em;
+        }
+        .cta a:hover { background: var(--brand-dark); }
+
+        /* ---- FOOTER ---- */
+        .ft {
+            text-align: center;
+            padding: 1.25rem 0;
+            border-top: 1px solid var(--gray-20);
+            margin-top: 0.75rem;
+        }
+
+        .ft-acts { margin-bottom: 0.5rem; }
+
+        .ft p {
+            font-size: 0.625rem;
+            color: var(--gray-30);
+        }
+
+        /* ---- MOBILE ---- */
+        @media (max-width: 480px) {
+            .wrap { padding: 0 1rem; }
+            .topbar { margin: 0 -1rem; padding: 0.75rem 1rem; }
+            .progress { margin: 0 -1rem; padding: 0.625rem 1rem; }
+            .intro-lead { font-size: 1.25rem; }
+            .q-text { font-size: 1.0625rem; }
+            .opt { padding: 0.9375rem 1rem; }
+            .pos-val { font-size: 2rem; }
+            .sp { font-size: 0.4375rem; padding: 0.4rem 0; }
+            .gate-form { flex-direction: column; }
+            .gate-btn { width: 100%; padding: 0.875rem; }
+        }
+
+        @media (min-width: 768px) {
+            .wrap { padding: 0 2rem; }
+            .topbar { margin: 0 -2rem; padding: 0.875rem 2rem; }
+            .progress { margin: 0 -2rem; padding: 0.625rem 2rem; }
+            .intro-lead { font-size: 1.625rem; }
+            .q-text { font-size: 1.3125rem; }
+            .pos-val { font-size: 3.25rem; }
+        }
+
+        .fade-out { animation: fo 0.12s ease forwards; }
+        .fade-in { animation: fi 0.2s ease forwards; }
+        @keyframes fo { to { opacity: 0; transform: translateY(-6px); } }
+        @keyframes fi { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="topbar">
+            <span class="topbar-title">Negotiation Power Diagnostic</span>
+            <span class="topbar-mark">Arete Advisors</span>
+        </div>
+
+        <div class="progress" id="prog">
+            <div class="progress-row">
+                <span class="progress-dim" id="progDim"></span>
+                <span class="progress-n" id="progN"></span>
+            </div>
+            <div class="progress-track"><div class="progress-fill" id="progFill"></div></div>
+        </div>
+
+        <!-- INTRO -->
+        <div class="screen active" id="sIntro">
+            <div class="intro">
+                <p class="intro-lead">Most negotiators misread their position. This diagnostic measures where you actually stand.</p>
+                <p class="intro-body">Eighteen statements across six dimensions of negotiating power. For each, indicate how accurately it describes your current situation. There are no right answers, only honest ones.</p>
+                <div class="intro-meta">
+                    <span>18 questions. About 3 minutes.</span>
+                    <span>No data is stored or transmitted. Everything runs in your browser.</span>
+                </div>
+                <div class="scale-label">Response scale</div>
+                <div class="scale-row">
+                    <div class="scale-chip"><span class="n">1</span><span class="t">Not at all</span></div>
+                    <div class="scale-chip"><span class="n">2</span><span class="t">Somewhat</span></div>
+                    <div class="scale-chip"><span class="n">3</span><span class="t">Mostly</span></div>
+                    <div class="scale-chip"><span class="n">4</span><span class="t">Exactly</span></div>
+                </div>
+                <button class="btn btn-brand btn-full" onclick="start()">Begin Assessment</button>
+            </div>
+        </div>
+
+        <!-- QUESTIONS -->
+        <div class="screen" id="sQ">
+            <div class="q-wrap" id="qWrap">
+                <div class="q-text" id="qText"></div>
+                <div class="opts" id="qOpts"></div>
+            </div>
+            <div class="q-nav">
+                <button class="btn-back" id="btnBack" onclick="back()">&larr; Previous</button>
+            </div>
+        </div>
+
+        <!-- LOADING -->
+        <div class="screen" id="sLoad">
+            <div class="ld">
+                <div class="spin"></div>
+                <p>Calculating your position</p>
+            </div>
+        </div>
+
+        <!-- RESULTS -->
+        <div class="screen" id="sRes">
+            <div class="res">
+                <div class="res-label">Your Negotiation Power Position</div>
+
+                <div class="pos-card">
+                    <div class="pos-val" id="posVal"></div>
+                    <div class="pos-score" id="posScore"></div>
+                    <div class="spec" id="spec">
+                        <div class="sp v">Vulnerable</div>
+                        <div class="sp e">Exposed</div>
+                        <div class="sp c">Contested</div>
+                        <div class="sp f">Favorable</div>
+                        <div class="sp s">Strong</div>
+                        <div class="sp d">Dominant</div>
+                    </div>
+                    <div class="pos-exp" id="posExp"></div>
+                </div>
+
+                <div class="gate" id="gate">
+                    <h3>Dimension breakdown</h3>
+                    <p>Your aggregate score tells one story. The dimension breakdown tells six. Enter your email to see where you are strong and where you are exposed.</p>
+                    <div class="gate-form">
+                        <input type="email" class="gate-email" id="gEmail" placeholder="your@email.com" autocomplete="email">
+                        <button class="gate-btn" onclick="submitGate()">Show Breakdown</button>
+                    </div>
+                    <div class="gate-err" id="gErr">Please enter a valid email address.</div>
+                    <div class="gate-skip"><a onclick="skipGate()">Continue without email</a></div>
+                </div>
+
+                <div class="bd" id="bd">
+                    <div class="bd-label">Dimension Breakdown</div>
+                    <div id="bdContent"></div>
+                </div>
+
+                <div class="cta">
+                    <h3>Want the full picture?</h3>
+                    <p>This is a directional read across 18 items. The full diagnostic covers 92 items with reliability scoring and facilitator-led analysis. It is how we start every engagement.</p>
+                    <a href="https://areteadvisors.pro/connect">Start a conversation</a>
+                </div>
+
+                <div class="ft">
+                    <div class="ft-acts">
+                        <button class="btn-back" onclick="restart()">Take again</button>
+                    </div>
+                    <p>&copy; 2026 Arete Advisors. Assessment reflects self-reported perceptions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+var Q=[
+{id:'B1',d:'batna',dn:'BATNA Strength',r:0,t:'If I received a message right now saying this negotiation is dead, my first reaction would be disappointment but not panic.'},
+{id:'B2',d:'batna',dn:'BATNA Strength',r:0,t:'My alternatives are strong enough that I am negotiating this deal because it is superior, not because I lack options.'},
+{id:'B3',d:'batna',dn:'BATNA Strength',r:1,t:'If the other party could see my actual alternatives in detail, they would negotiate harder against me than they currently are.'},
+{id:'T1',d:'time',dn:'Time Position',r:0,t:'If the other party said "let\'s pause discussions for 3 months," I could agree without significant consequences.'},
+{id:'T2',d:'time',dn:'Time Position',r:0,t:'The other party has a deadline, external pressure, or time-sensitive event that I do not share.'},
+{id:'T3',d:'time',dn:'Time Position',r:1,t:'I have internal stakeholders asking me when this deal will close, and their patience is limited.'},
+{id:'I1',d:'info',dn:'Information Advantage',r:0,t:'I could write down the other party\'s top three priorities in this negotiation, in rank order, with confidence I\'m correct.'},
+{id:'I2',d:'info',dn:'Information Advantage',r:0,t:'I could describe the other party\'s best alternative if this negotiation fails: who they would turn to, how long it would take, what they would sacrifice.'},
+{id:'I3',d:'info',dn:'Information Advantage',r:1,t:'Most of what I know about the other party\'s constraints, pressures, and alternatives comes directly from what they have told me.'},
+{id:'A1',d:'authority',dn:'Authority & Decision Control',r:0,t:'If the other party accepted my ideal terms right now, I could say yes and make it binding without consulting anyone else.'},
+{id:'A2',d:'authority',dn:'Authority & Decision Control',r:0,t:'I know specifically who on the other side has final sign-off authority, their name and their role.'},
+{id:'A3',d:'authority',dn:'Authority & Decision Control',r:1,t:'Any agreement I reach would require approval from at least one other person before it becomes final.'},
+{id:'N1',d:'need',dn:'Need Asymmetry',r:0,t:'If I had to bet, I would bet that the other party\'s organization has more riding on this deal than mine does.'},
+{id:'N2',d:'need',dn:'Need Asymmetry',r:0,t:'The other party has done at least one thing (followed up quickly, offered unprompted concessions, expressed eagerness) that signals they need this deal.'},
+{id:'N3',d:'need',dn:'Need Asymmetry',r:1,t:'I have done at least one thing (followed up quickly, offered unprompted concessions, expressed eagerness) that may have signaled I need this deal.'},
+{id:'R1',d:'relationship',dn:'Relationship & Reputation',r:0,t:'The other party\'s future reputation with people I know, or their future access to opportunities I influence, depends partly on how they behave in this negotiation.'},
+{id:'R2',d:'relationship',dn:'Relationship & Reputation',r:0,t:'The other party has more to lose reputationally from this negotiation going badly than I do.'},
+{id:'R3',d:'relationship',dn:'Relationship & Reputation',r:1,t:'The other party could make a phone call or send an email to someone I care about that would create meaningful reputational cost for me.'}
+];
+
+var D={
+batna:{n:'BATNA Strength',desc:{strong:'Your alternatives are credible and accessible. You can negotiate from choice, not necessity.',moderate:'You have alternatives, but their quality or readiness may have gaps. The other party may not fully believe you would walk away.',weak:'Limited alternatives make this deal important. You may be negotiating from necessity rather than choice.'},act:{strong:'How can you make your alternatives more visible without overplaying your hand?',moderate:'Can you make your alternatives more concrete or credible before the next round?',weak:'What would it take to develop at least one genuine alternative in the next 30 days?'}},
+time:{n:'Time Position',desc:{strong:'Time works in your favor. You can afford patience and let the other party feel the pressure of delay.',moderate:'Time pressure is roughly balanced. Neither side has a decisive timing advantage.',weak:'Deadline pressure or delay costs work against you. The other party can afford to wait; you may not.'},act:{strong:'How can you use your patience strategically without stalling unnecessarily?',moderate:'Can you identify and address any artificial urgency the other party has created?',weak:'What would it take to extend your timeline or create urgency on their side?'}},
+info:{n:'Information Advantage',desc:{strong:'Strong intelligence position. You understand their constraints better than they understand yours.',moderate:'Some insight, but gaps and unverified assumptions likely remain.',weak:'Information disadvantage. Much of what you "know" comes from what they chose to tell you.'},act:{strong:'How can you use your information advantage without revealing your sources?',moderate:'What key assumption about their situation could you verify independently?',weak:'What research could you conduct before your next interaction to close the information gap?'}},
+authority:{n:'Authority & Decision Control',desc:{strong:'You can commit independently and quickly. Your decision speed creates flexibility.',moderate:'Moderate authority constraints. Your approval process roughly matches theirs.',weak:'Significant authority constraints limit flexibility. This may be a genuine limitation or an underused tactic.'},act:{strong:'How can you use your ability to commit quickly as leverage?',moderate:'Have you tested whether their "need for approval" is genuine or tactical?',weak:'Can you reframe your approval requirement as a strategic tool rather than a constraint?'}},
+need:{n:'Need Asymmetry',desc:{strong:'They need this deal more than you do. Use this carefully to avoid creating resentment.',moderate:'Relative need is roughly balanced. Neither side has a decisive advantage.',weak:'You need this deal more than they do. Be careful not to signal desperation.'},act:{strong:'How can you leverage their need without creating resentment that damages the deal?',moderate:'What signals have you sent about your level of need? Were they intentional?',weak:'What would reduce your dependence on this specific deal or counterparty?'}},
+relationship:{n:'Relationship & Reputation',desc:{strong:'Meaningful relationship leverage. The other party has strong reasons to maintain good standing with you.',moderate:'Moderate relationship considerations. Neither party can ignore reputational consequences.',weak:'Limited relationship leverage, or reputation constraints work more against you than them.'},act:{strong:'How can you invoke relationship considerations without it feeling like a threat?',moderate:'Is the other party behaving as if they value the ongoing relationship?',weak:'If relationship leverage is limited, are you free to negotiate more aggressively?'}}
+};
+
+var bands=[
+{mn:0,mx:25,l:'VULNERABLE',c:'v',z:0},
+{mn:26,mx:40,l:'EXPOSED',c:'e',z:1},
+{mn:41,mx:55,l:'CONTESTED',c:'c',z:2},
+{mn:56,mx:70,l:'FAVORABLE',c:'f',z:3},
+{mn:71,mx:85,l:'STRONG',c:'s',z:4},
+{mn:86,mx:100,l:'DOMINANT',c:'d',z:5}
+];
+
+var expl={
+v:'Significant exposure across multiple dimensions. The other party holds most advantages. Prioritize strengthening your weakest areas before proceeding.',
+e:'Multiple areas of weakness require attention. Proceed carefully and consider whether this is the right time to finalize terms.',
+c:'Relatively balanced position. Outcome will depend heavily on preparation and execution during the negotiation itself.',
+f:'Advantages outweigh exposures. Negotiate with confidence, but stay alert to your vulnerable dimensions.',
+s:'Clear advantages across most dimensions. Focus on capturing value while avoiding overconfidence.',
+d:'Overwhelming position. The primary risk is overplaying your hand or creating resentment that damages long-term relationships.'
+};
+
+var cq=0,R={},adv=false;
+
+function show(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});document.getElementById(id).classList.add('active')}
+
+function start(){cq=0;R={};show('sQ');document.getElementById('prog').classList.add('on');render()}
+
+function render(){
+var q=Q[cq],w=document.getElementById('qWrap');
+w.classList.remove('fade-in');void w.offsetWidth;w.classList.add('fade-in');
+document.getElementById('progDim').textContent=q.dn;
+document.getElementById('progN').textContent=(cq+1)+' / '+Q.length;
+document.getElementById('progFill').style.width=(cq/Q.length*100)+'%';
+document.getElementById('qText').textContent=q.t;
+var sv=R[q.id],lb=['Not at all','Somewhat','Mostly','Exactly'];
+document.getElementById('qOpts').innerHTML=[1,2,3,4].map(function(v){
+return '<button class="opt'+(sv===v?' picked':'')+'" onclick="pick(\''+q.id+'\','+v+')" type="button"><span class="opt-n">'+v+'</span><span class="opt-t">'+lb[v-1]+'</span></button>';
+}).join('');
+document.getElementById('btnBack').style.visibility=cq===0?'hidden':'visible';
+adv=false;
+}
+
+function pick(id,v){
+if(adv)return;
+R[id]=v;adv=true;
+document.querySelectorAll('.opt').forEach(function(o){o.classList.remove('picked')});
+event.currentTarget.classList.add('picked');
+setTimeout(function(){
+if(cq<Q.length-1){cq++;render()}else{loading()}
+},300);
+}
+
+function back(){if(cq>0){cq--;render()}}
+
+function loading(){show('sLoad');document.getElementById('prog').classList.remove('on');setTimeout(results,1300)}
+
+function calc(){
+var dk=['batna','time','info','authority','need','relationship'],ds={},tr=0;
+dk.forEach(function(k){
+var its=Q.filter(function(q){return q.d===k}),raw=0;
+its.forEach(function(q){var s=R[q.id];if(q.r)s=5-s;raw+=s});
+ds[k]=Math.max(0,Math.min(100,Math.round(((raw-3)/9)*100)));
+tr+=raw;
+});
+return{agg:Math.max(0,Math.min(100,Math.round(((tr-18)/54)*100))),dim:ds};
+}
+
+function gb(s){return bands.find(function(b){return s>=b.mn&&s<=b.mx})||bands[0]}
+function dl(s){return s>=67?'strong':s>=34?'moderate':'weak'}
+
+var bcolors={v:'var(--red)',e:'var(--orange)',c:'var(--amber)',f:'var(--green)',s:'var(--brand)',d:'var(--brand-dark)'};
+
+function results(){
+var sc=calc(),b=gb(sc.agg);
+document.getElementById('posVal').textContent=b.l;
+document.getElementById('posVal').style.color=getComputedStyle(document.documentElement).getPropertyValue({'v':'--red','e':'--orange','c':'--amber','f':'--green','s':'--brand','d':'--brand-dark'}[b.c]);
+document.getElementById('posScore').textContent='Score: '+sc.agg+' / 100';
+document.querySelectorAll('.sp').forEach(function(s,i){s.classList.toggle('on',i===b.z)});
+document.getElementById('posExp').textContent=expl[b.c];
+buildBd(sc);
+window._sc=sc;
+show('sRes');
+document.getElementById('progFill').style.width='100%';
+window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function buildBd(sc){
+var dk=['batna','time','info','authority','need','relationship'],h='';
+dk.forEach(function(k){
+var d=D[k],s=sc.dim[k],lv=dl(s),b=gb(s),col=bcolors[b.c];
+h+='<div class="dr" onclick="this.classList.toggle(\'open\')">'+
+'<div class="dr-top"><span class="dr-name">'+d.n+'</span>'+
+'<span class="dr-tag" style="background:'+col+'">'+b.l+'</span></div>'+
+'<div class="dr-track"><div class="dr-fill" style="background:'+col+'" data-w="'+s+'"></div></div>'+
+'<div class="dr-detail"><p>'+d.desc[lv]+'</p><p class="act">'+d.act[lv]+'</p></div></div>';
+});
+document.getElementById('bdContent').innerHTML=h;
+}
+
+function animBars(){
+document.querySelectorAll('.dr-fill').forEach(function(f){
+setTimeout(function(){f.style.width=f.getAttribute('data-w')+'%'},80);
+});
+}
+
+function submitGate(){
+var em=document.getElementById('gEmail').value.trim();
+if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){document.getElementById('gErr').style.display='block';return}
+document.getElementById('gErr').style.display='none';
+sendLead(em);
+reveal();
+}
+
+function skipGate(){reveal()}
+
+function reveal(){
+document.getElementById('gate').style.display='none';
+document.getElementById('bd').classList.add('on');
+animBars();
+}
+
+function sendLead(em){
+var sc=window._sc,b=gb(sc.agg),fd=new FormData();
+fd.append('Email',em);fd.append('NPD-Score',sc.agg);fd.append('NPD-Position',b.l);fd.append('Source','NPD-Lite');
+fetch(window.location.origin+'/diagnostic',{method:'POST',body:fd}).catch(function(){});
+}
+
+function restart(){
+R={};cq=0;
+document.getElementById('gate').style.display='block';
+document.getElementById('bd').classList.remove('on');
+document.getElementById('gEmail').value='';
+document.getElementById('prog').classList.remove('on');
+show('sIntro');
+window.scrollTo({top:0});
+}
+</script>
+</body>
+</html>
