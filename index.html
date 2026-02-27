@@ -854,9 +854,14 @@ animBars();
 }
 
 function sendLead(em){
-var sc=window._sc,b=gb(sc.agg),fd=new FormData();
-fd.append('Email',em);fd.append('NPD-Score',sc.agg);fd.append('NPD-Position',b.l);fd.append('Source','NPD-Lite');
-fetch(window.location.origin+'/diagnostic',{method:'POST',body:fd}).catch(function(){});
+var sc=window._sc,b=gb(sc.agg);
+window.parent.postMessage({
+type:'npd-lead',
+email:em,
+score:sc.agg,
+position:b.l,
+source:'NPD-Lite'
+},'*');
 }
 
 function restart(){
