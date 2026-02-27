@@ -1578,20 +1578,44 @@
             window.scrollTo({top: 0});
         }
 
-        // Report height to parent for iframe auto-resize
+        // ---- IFRAME HEIGHT MANAGEMENT ----
+        var isIframed = (window.self !== window.top);
+        var maxHeight = 0;
+        var currentScreen = 'sIntro';
+
+        // In iframe: disable viewport-based min-heights (prevents infinite resize loop)
+        // and set a stable floor for question screens
+        if (isIframed) {
+            var iframeStyle = document.createElement('style');
+            iframeStyle.textContent = '.intro, .q-wrap { min-height: auto !important; } .q-wrap { min-height: 520px !important; }';
+            document.head.appendChild(iframeStyle);
+        }
+
+        // Wrap show() to track screen changes and reset max height on screen transitions
+        var _origShow = show;
+        show = function(id) {
+            var prevScreen = currentScreen;
+            currentScreen = id;
+            // Reset max height on any screen change so results/intro can be shorter than questions
+            if (prevScreen !== id) {
+                maxHeight = 0;
+            }
+            _origShow(id);
+        };
+
         function postHeight() {
             var el = document.querySelector('.wrap');
             var h = Math.max(el ? el.offsetHeight : 0, document.body.scrollHeight);
+            if (isIframed) {
+                // During question flow: only grow, never shrink (prevents flicker)
+                if (currentScreen === 'sQ') {
+                    if (h > maxHeight) {
+                        maxHeight = h;
+                    }
+                    h = maxHeight;
+                }
+            }
             window.parent.postMessage({type: 'npd-height', height: h}, '*');
-        }
-
-        // Disable viewport-based min-heights when running in iframe
-        // Prevents infinite resize loop: iframe reports height -> parent grows iframe ->
-        // 100vh increases -> min-height increases -> iframe reports larger height -> repeat
-        if (window.self !== window.top) {
-            var iframeStyle = document.createElement('style');
-            iframeStyle.textContent = '.intro, .q-wrap { min-height: auto !important; }';
-            document.head.appendChild(iframeStyle);
         }
 
         window.addEventListener('load', function() {
