@@ -36,8 +36,10 @@
             background: var(--gray-10);
             color: var(--gray-70);
             line-height: 1.6;
-            min-height: 100vh;
             -webkit-font-smoothing: antialiased;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
         }
 
         .wrap {
@@ -876,7 +878,8 @@ window.scrollTo({top:0});
 
 // Report height to parent for iframe auto-resize
 function postHeight(){
-var h=document.body.scrollHeight;
+var el=document.querySelector('.wrap');
+var h=el?el.offsetHeight:document.body.scrollHeight;
 window.parent.postMessage({type:'npd-height',height:h},'*');
 }
 window.addEventListener('load',function(){postHeight();setInterval(postHeight,300)});
