@@ -868,6 +868,13 @@ document.getElementById('prog').classList.remove('on');
 show('sIntro');
 window.scrollTo({top:0});
 }
+
+// Report height to parent for iframe auto-resize
+function postHeight(){
+var h=document.body.scrollHeight;
+window.parent.postMessage({type:'npd-height',height:h},'*');
+}
+window.addEventListener('load',function(){postHeight();setInterval(postHeight,300)});
 </script>
 </body>
 </html>
