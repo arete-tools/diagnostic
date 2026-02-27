@@ -1585,6 +1585,15 @@
             window.parent.postMessage({type: 'npd-height', height: h}, '*');
         }
 
+        // Disable viewport-based min-heights when running in iframe
+        // Prevents infinite resize loop: iframe reports height -> parent grows iframe ->
+        // 100vh increases -> min-height increases -> iframe reports larger height -> repeat
+        if (window.self !== window.top) {
+            var iframeStyle = document.createElement('style');
+            iframeStyle.textContent = '.intro, .q-wrap { min-height: auto !important; }';
+            document.head.appendChild(iframeStyle);
+        }
+
         window.addEventListener('load', function() {
             postHeight();
             setInterval(postHeight, 300);
