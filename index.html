@@ -7,195 +7,260 @@
     <title>Negotiation Power Diagnostic | Arete Advisors</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700;900&family=EB+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --brand: #264550;
             --brand-light: #365a68;
             --brand-dark: #1a3640;
-            --brand-faint: #eef1f2;
-            --black: #000000;
-            --gray-90: #1a1a1a;
-            --gray-70: #3d3d3f;
-            --gray-50: #5e5e60;
-            --gray-30: #b0b0b2;
-            --gray-20: #d1d3d4;
-            --gray-10: #eef1f2;
+            --brand-faint: #F8F7F4;
+            --text-primary: #4d4d4f;
+            --text-secondary: #7a7a7c;
+            --text-tertiary: #9a9a9c;
+            --tint: #d1d3d4;
             --white: #ffffff;
             --red: #991b1b;
             --orange: #9a3412;
             --amber: #854d0e;
             --green: #166534;
-            --font: 'Lato', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-display: 'Lato', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-body: 'EB Garamond', Georgia, serif;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: var(--font);
-            background: var(--gray-10);
-            color: var(--gray-70);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--brand-faint);
+            color: var(--text-primary);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
 
         .wrap {
             max-width: 620px;
             margin: 0 auto;
-            padding: 0 1.5rem;
+            padding: 0 24px;
             display: flex;
             flex-direction: column;
         }
 
-        .screen { display: none; }
-        .screen.active { display: block; }
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
 
         /* ---- TOP BAR ---- */
         .topbar {
-            margin: 0 -1.5rem;
-            padding: 1rem 1.5rem;
-            border-bottom: 2px solid var(--brand);
+            margin: 0 -24px;
+            padding: 16px 24px;
             background: var(--white);
+            border-bottom: 3px solid var(--brand);
+            position: relative;
+            z-index: 10;
         }
 
         .topbar-title {
+            font-family: var(--font-display);
             font-weight: 900;
             font-size: 0.875rem;
             color: var(--brand);
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
         }
 
-        /* ---- PROGRESS ---- */
+        /* ---- PROGRESS (Typographic Counter) ---- */
         .progress {
             display: none;
-            margin: 0 -1.5rem;
-            padding: 0.875rem 1.5rem;
+            margin: 0 -24px;
+            padding: 20px 24px;
             background: var(--white);
-            border-bottom: 1px solid var(--gray-20);
+            border-bottom: 1px solid var(--tint);
         }
-        .progress.on { display: block; }
 
-        .progress-row {
+        .progress.on {
+            display: block;
+        }
+
+        .progress-counter {
             display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 0.4rem;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .progress-number {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--brand);
+            line-height: 1;
+            letter-spacing: -0.03em;
+            min-width: 72px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .progress-number span {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            letter-spacing: 0;
+        }
+
+        .progress-right {
+            flex: 1;
         }
 
         .progress-dim {
-            font-size: 0.8125rem;
+            font-family: var(--font-display);
+            font-size: 0.75rem;
             font-weight: 900;
             color: var(--brand);
             text-transform: uppercase;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
         }
 
-        .progress-n {
-            font-size: 0.8125rem;
-            font-weight: 400;
-            color: var(--gray-50);
+        .progress-pips {
+            display: flex;
+            gap: 4px;
         }
 
-        .progress-track {
-            height: 3px;
-            background: var(--gray-20);
+        .progress-pip {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #e8e5e0;
+            transition: all 0.25s ease;
         }
 
-        .progress-fill {
-            height: 100%;
+        .progress-pip.done {
             background: var(--brand);
-            transition: width 0.35s ease;
-            width: 0%;
+        }
+
+        .progress-pip.active {
+            background: var(--brand);
+            box-shadow: 0 0 0 3px rgba(38, 69, 80, 0.15);
+        }
+
+        .progress-pip.dim-gap {
+            margin-left: 8px;
         }
 
         /* ---- INTRO ---- */
         .intro {
-            padding: 3.5rem 0 3rem;
+            padding: 64px 0 48px;
             min-height: calc(100vh - 120px);
             display: flex;
             flex-direction: column;
         }
 
         .intro-lead {
-            font-size: 1.75rem;
+            font-family: var(--font-display);
+            font-size: 2rem;
             font-weight: 900;
-            line-height: 1.35;
-            color: var(--black);
-            margin-bottom: 1.25rem;
-            max-width: 520px;
+            line-height: 1.25;
+            color: #000;
+            margin-bottom: 32px;
+            letter-spacing: -0.01em;
         }
 
         .intro-body {
+            font-family: var(--font-display);
             font-size: 1.0625rem;
+            font-weight: 700;
             line-height: 1.7;
-            color: var(--gray-70);
-            margin-bottom: 2rem;
+            color: #1a1a1a;
+            margin-bottom: 48px;
+            letter-spacing: -0.01em;
         }
 
         .intro-meta {
-            font-size: 0.875rem;
-            color: var(--gray-50);
-            padding: 1.25rem 1.5rem;
+            font-family: var(--font-display);
+            font-size: 0.9375rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            padding: 32px;
             background: var(--white);
             border-left: 3px solid var(--brand);
-            margin-bottom: 2.5rem;
-            line-height: 1.7;
+            margin-bottom: 48px;
+            line-height: 1.8;
+            border-radius: 3px;
         }
 
-        .intro-meta span { display: block; }
+        .intro-meta span {
+            display: block;
+        }
+
+        .intro-meta span:not(:last-child) {
+            margin-bottom: 8px;
+        }
 
         .scale-label {
-            font-size: 0.6875rem;
+            font-family: var(--font-display);
+            font-size: 0.75rem;
             font-weight: 900;
-            color: var(--gray-50);
+            color: var(--text-secondary);
             text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
         }
 
         .scale-row {
             display: flex;
-            gap: 3px;
-            margin-bottom: 3rem;
+            gap: 8px;
+            margin-bottom: 48px;
         }
 
         .scale-chip {
             flex: 1;
             text-align: center;
-            padding: 1rem 0.25rem 0.875rem;
+            padding: 24px 12px 20px;
             background: var(--white);
-            border: 1px solid var(--gray-20);
+            border: 1px solid var(--tint);
+            border-radius: 5px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
         }
 
         .scale-chip .n {
             display: block;
+            font-family: var(--font-display);
             font-weight: 900;
-            font-size: 1.25rem;
+            font-size: 1.375rem;
             color: var(--brand);
-            margin-bottom: 0.25rem;
+            margin-bottom: 4px;
         }
 
         .scale-chip .t {
+            font-family: var(--font-display);
             font-size: 0.6875rem;
             font-weight: 700;
-            color: var(--gray-50);
+            color: var(--text-secondary);
             text-transform: uppercase;
-            letter-spacing: 0.03em;
+            letter-spacing: 0.08em;
         }
 
         /* ---- BUTTONS ---- */
         .btn {
-            font-family: var(--font);
+            font-family: var(--font-display);
             font-weight: 700;
             font-size: 1rem;
-            padding: 1.125rem 2rem;
+            padding: 18px 24px;
             cursor: pointer;
             border: none;
-            transition: background 0.15s ease;
+            border-radius: 5px;
+            transition: background 0.2s ease;
             -webkit-tap-highlight-color: transparent;
             letter-spacing: 0.02em;
         }
@@ -204,83 +269,114 @@
             background: var(--brand);
             color: var(--white);
         }
-        .btn-brand:hover { background: var(--brand-dark); }
 
-        .btn-full { display: block; width: 100%; margin-top: auto; }
+        .btn-brand:hover {
+            background: var(--brand-dark);
+        }
+
+        .btn-brand:active {
+            transform: scale(0.98);
+        }
+
+        .btn-full {
+            display: block;
+            width: 100%;
+            margin-top: auto;
+        }
 
         .btn-back {
             background: none;
             border: none;
-            font-family: var(--font);
-            font-size: 0.8125rem;
+            font-family: var(--font-body);
+            font-size: 0.9375rem;
             font-weight: 400;
-            color: var(--gray-50);
+            color: var(--text-secondary);
             cursor: pointer;
-            padding: 0.5rem 0;
+            padding: 8px 0;
+            transition: color 0.15s ease;
         }
-        .btn-back:hover { color: var(--brand); }
+
+        .btn-back:hover {
+            color: var(--brand);
+        }
 
         /* ---- QUESTION ---- */
         .q-wrap {
-            padding: 3rem 0 2rem;
+            padding: 48px 0 32px;
             min-height: calc(100vh - 120px);
             display: flex;
             flex-direction: column;
         }
 
         .q-text {
-            font-size: 1.4375rem;
-            font-weight: 400;
-            line-height: 1.55;
-            color: var(--black);
-            margin-bottom: 2.5rem;
+            font-family: var(--font-body);
+            font-size: 1.375rem;
+            font-weight: 500;
+            line-height: 1.65;
+            color: #000;
+            margin-bottom: 48px;
+            letter-spacing: -0.01em;
         }
 
         .opts {
             display: flex;
             flex-direction: column;
-            gap: 0.625rem;
+            gap: 16px;
         }
 
         .opt {
             display: flex;
             align-items: center;
-            gap: 1.125rem;
-            padding: 1.375rem 1.5rem;
+            gap: 16px;
+            padding: 18px 24px;
             background: var(--white);
-            border: 2px solid var(--gray-20);
+            border: 2px solid var(--tint);
+            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.12s ease;
+            transition: all 0.15s ease;
             -webkit-tap-highlight-color: transparent;
             user-select: none;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
         }
 
-        .opt:hover { border-color: var(--brand-light); }
+        .opt:hover {
+            border-color: var(--brand-light);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+        }
 
         .opt.picked {
             border-color: var(--brand);
             background: var(--brand);
+            box-shadow: 0 2px 6px rgba(38, 69, 80, 0.15);
         }
 
         .opt-n {
+            font-family: var(--font-display);
             font-weight: 900;
-            font-size: 1.1875rem;
+            font-size: 1.25rem;
             color: var(--brand);
-            width: 1.75rem;
+            width: 32px;
             text-align: center;
             flex-shrink: 0;
         }
-        .opt.picked .opt-n { color: var(--white); }
+
+        .opt.picked .opt-n {
+            color: var(--white);
+        }
 
         .opt-t {
-            font-size: 1.0625rem;
-            color: var(--gray-70);
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--text-primary);
             font-weight: 700;
         }
-        .opt.picked .opt-t { color: var(--white); font-weight: 700; }
+
+        .opt.picked .opt-t {
+            color: var(--white);
+        }
 
         .q-nav {
-            padding: 1.5rem 0;
+            padding: 24px 0;
             margin-top: auto;
         }
 
@@ -289,325 +385,747 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 8rem 0;
+            padding: 128px 0;
         }
 
         .spin {
-            width: 32px;
-            height: 32px;
-            border: 3px solid var(--gray-20);
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--tint);
             border-top-color: var(--brand);
             border-radius: 50%;
             animation: sp 0.7s linear infinite;
-            margin-bottom: 1rem;
+            margin-bottom: 16px;
         }
-        @keyframes sp { to { transform: rotate(360deg); } }
 
-        .ld p { font-size: 0.8125rem; color: var(--gray-50); }
+        @keyframes sp {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .ld p {
+            font-family: var(--font-display);
+            font-size: 0.9375rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
 
         /* ---- RESULTS ---- */
-        .res { padding: 1.5rem 0; }
+        .res {
+            padding: 24px 0;
+        }
 
         .res-label {
-            font-size: 0.6875rem;
+            font-family: var(--font-display);
+            font-size: 0.75rem;
             font-weight: 900;
-            color: var(--gray-50);
+            color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.1em;
             text-align: center;
-            margin-bottom: 1.25rem;
+            margin-bottom: 32px;
         }
 
         .pos-card {
             background: var(--white);
-            border: 1px solid var(--gray-20);
-            padding: 2.5rem 1.5rem 2rem;
+            border-radius: 3px;
+            padding: 48px 32px 40px;
             text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 32px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            animation: reveal-position 0.5s ease-out;
+        }
+
+        @keyframes reveal-position {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .pos-val {
+            font-family: var(--font-display);
             font-weight: 900;
-            font-size: 2.75rem;
+            font-size: 3.5rem;
             letter-spacing: 0.08em;
-            margin-bottom: 0.125rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            color: var(--brand);
         }
 
         .pos-score {
-            font-size: 0.8125rem;
+            font-family: var(--font-body);
+            font-size: 0.9375rem;
             font-weight: 400;
-            color: var(--gray-50);
+            color: var(--text-secondary);
             letter-spacing: 0.02em;
-            margin-bottom: 1.75rem;
+            margin-bottom: 32px;
         }
 
         .spec {
             display: flex;
-            gap: 2px;
-            margin-bottom: 1.75rem;
+            align-items: center;
+            gap: 3px;
+            margin-bottom: 32px;
         }
 
         .sp {
             flex: 1;
-            padding: 0.625rem 0.125rem;
+            padding: 8px 2px;
             text-align: center;
-            font-size: 0.5rem;
-            font-weight: 700;
+            font-family: var(--font-display);
+            font-size: 0;
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 0.03em;
+            letter-spacing: 0.06em;
             color: var(--white);
-            opacity: 0.3;
+            opacity: 0.25;
             transition: all 0.4s ease;
+            border-radius: 3px;
+            height: 8px;
         }
 
         .sp.on {
             opacity: 1;
-            padding: 0.75rem 0.125rem;
+            flex: 2.5;
+            height: auto;
+            padding: 12px 8px;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            border-radius: 4px;
+            box-shadow: var(--shadow-lg);
         }
 
-        .sp.v { background: var(--red); }
-        .sp.e { background: var(--orange); }
-        .sp.c { background: var(--amber); }
-        .sp.f { background: var(--green); }
-        .sp.s { background: var(--brand); }
-        .sp.d { background: var(--brand-dark); }
+        .sp.v {
+            background: var(--red);
+        }
+
+        .sp.e {
+            background: var(--orange);
+        }
+
+        .sp.c {
+            background: var(--amber);
+        }
+
+        .sp.f {
+            background: var(--green);
+        }
+
+        .sp.s {
+            background: var(--brand);
+        }
+
+        .sp.d {
+            background: var(--brand-dark);
+        }
 
         .pos-exp {
-            font-size: 0.9375rem;
-            line-height: 1.65;
-            color: var(--gray-70);
+            font-family: var(--font-display);
+            font-size: 1.1875rem;
+            font-weight: 700;
+            line-height: 1.7;
+            color: #1a1a1a;
             text-align: left;
+            letter-spacing: -0.01em;
+            animation: reveal-text 0.5s ease-out 0.35s both;
+        }
+
+        @keyframes reveal-text {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         /* ---- GATE ---- */
         .gate {
             background: var(--white);
-            border: 1px solid var(--gray-20);
-            padding: 1.75rem 1.5rem;
-            margin-bottom: 1.5rem;
+            border-top: 3px solid var(--brand);
+            border-radius: 3px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
         }
 
         .gate h3 {
+            font-family: var(--font-display);
             font-weight: 900;
             font-size: 1rem;
-            color: var(--black);
-            margin-bottom: 0.375rem;
+            color: #000;
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
         }
 
         .gate p {
-            font-size: 0.875rem;
-            line-height: 1.6;
-            color: var(--gray-70);
-            margin-bottom: 1.25rem;
+            font-family: var(--font-body);
+            font-size: 0.9375rem;
+            line-height: 1.7;
+            color: var(--text-primary);
+            margin-bottom: 24px;
         }
 
         .gate-form {
             display: flex;
-            gap: 0.5rem;
+            gap: 8px;
+            margin-bottom: 16px;
         }
 
         .gate-email {
             flex: 1;
-            font-family: var(--font);
+            font-family: var(--font-body);
             font-size: 0.9375rem;
-            padding: 0.75rem 1rem;
-            border: 2px solid var(--gray-20);
+            padding: 12px 16px;
+            border: 2px solid var(--tint);
+            border-radius: 5px;
             outline: none;
-            background: var(--gray-10);
+            background: var(--brand-faint);
+            transition: border-color 0.15s ease;
         }
-        .gate-email:focus { border-color: var(--brand); }
-        .gate-email::placeholder { color: var(--gray-30); }
+
+        .gate-email:focus {
+            border-color: var(--brand);
+            background: var(--white);
+        }
+
+        .gate-email::placeholder {
+            color: #b0b0b2;
+        }
 
         .gate-btn {
-            font-family: var(--font);
+            font-family: var(--font-display);
             font-weight: 700;
-            font-size: 0.8125rem;
-            padding: 0.75rem 1.25rem;
+            font-size: 0.875rem;
+            padding: 12px 24px;
             background: var(--brand);
             color: var(--white);
             border: none;
+            border-radius: 5px;
             cursor: pointer;
             white-space: nowrap;
             letter-spacing: 0.02em;
+            transition: background 0.2s ease;
         }
-        .gate-btn:hover { background: var(--brand-dark); }
+
+        .gate-btn:hover {
+            background: var(--brand-dark);
+        }
+
+        .gate-btn:active {
+            transform: scale(0.98);
+        }
 
         .gate-err {
+            font-family: var(--font-body);
             font-size: 0.75rem;
             color: var(--red);
-            margin-top: 0.5rem;
+            margin-top: 8px;
             display: none;
         }
 
         .gate-skip {
-            display: block;
             text-align: right;
-            margin-top: 0.625rem;
         }
 
         .gate-skip a {
-            font-size: 0.6875rem;
-            color: var(--gray-30);
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
             text-decoration: none;
             cursor: pointer;
+            transition: color 0.15s ease;
         }
-        .gate-skip a:hover { color: var(--gray-50); }
+
+        .gate-skip a:hover {
+            color: var(--text-secondary);
+        }
 
         /* ---- BREAKDOWN ---- */
-        .bd { display: none; }
-        .bd.on { display: block; }
+        .bd {
+            display: none;
+        }
+
+        .bd.on {
+            display: block;
+        }
 
         .bd-label {
-            font-size: 0.6875rem;
+            font-family: var(--font-display);
+            font-size: 0.75rem;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--gray-50);
-            margin-bottom: 0.75rem;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
         }
 
         .dr {
             background: var(--white);
-            border: 1px solid var(--gray-20);
-            padding: 1rem 1.25rem;
-            margin-bottom: 0.375rem;
+            border-radius: 3px;
+            padding: 20px 24px;
+            margin-bottom: 8px;
             cursor: pointer;
-            transition: border-color 0.12s ease;
+            transition: box-shadow 0.15s ease;
+            box-shadow: var(--shadow-sm);
         }
-        .dr:hover { border-color: var(--brand-light); }
+
+        .dr:hover {
+            box-shadow: var(--shadow-md);
+        }
 
         .dr-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0.4rem;
+            margin-bottom: 12px;
         }
 
         .dr-name {
+            font-family: var(--font-display);
             font-weight: 900;
-            font-size: 0.8125rem;
-            color: var(--black);
+            font-size: 1rem;
+            color: #000;
+            letter-spacing: -0.01em;
         }
 
         .dr-tag {
-            font-size: 0.5625rem;
-            font-weight: 700;
-            padding: 0.2rem 0.5rem;
+            font-family: var(--font-display);
+            font-size: 0.6875rem;
+            font-weight: 900;
+            padding: 5px 10px;
             color: var(--white);
             text-transform: uppercase;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.06em;
+            border-radius: 3px;
         }
 
         .dr-track {
-            height: 3px;
-            background: var(--gray-10);
+            height: 6px;
+            background: #e8e5e0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 12px;
         }
 
         .dr-fill {
             height: 100%;
-            transition: width 0.5s ease;
+            border-radius: 3px;
             width: 0%;
+            transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .dr-detail {
             display: none;
-            margin-top: 0.75rem;
-            padding-top: 0.75rem;
-            border-top: 1px solid var(--gray-20);
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--tint);
         }
 
-        .dr.open .dr-detail { display: block; }
+        .dr.open .dr-detail {
+            display: block;
+        }
 
         .dr-detail p {
-            font-size: 0.875rem;
-            line-height: 1.6;
-            color: var(--gray-70);
-            margin-bottom: 0.5rem;
+            font-family: var(--font-body);
+            font-size: 1.0625rem;
+            line-height: 1.7;
+            color: var(--text-primary);
+            margin-bottom: 12px;
         }
 
         .dr-detail .act {
-            font-size: 0.875rem;
+            font-family: var(--font-body);
+            font-size: 1.0625rem;
             font-style: italic;
             color: var(--brand);
+            line-height: 1.7;
         }
 
         /* ---- CTA ---- */
         .cta {
             border-left: 3px solid var(--brand);
             background: var(--white);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
+            border-radius: 3px;
+            padding: 32px;
+            margin: 32px 0;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
         }
 
         .cta h3 {
+            font-family: var(--font-display);
             font-weight: 900;
-            font-size: 0.9375rem;
-            color: var(--black);
-            margin-bottom: 0.375rem;
+            font-size: 1rem;
+            color: #000;
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
         }
 
         .cta p {
-            font-size: 0.875rem;
-            line-height: 1.6;
-            color: var(--gray-70);
-            margin-bottom: 1.25rem;
+            font-family: var(--font-body);
+            font-size: 0.9375rem;
+            line-height: 1.7;
+            color: var(--text-primary);
+            margin-bottom: 24px;
         }
 
         .cta a {
             display: inline-block;
-            font-family: var(--font);
+            font-family: var(--font-display);
             font-weight: 700;
             font-size: 0.875rem;
-            padding: 0.8125rem 1.75rem;
+            padding: 12px 24px;
             background: var(--brand);
             color: var(--white);
             text-decoration: none;
             letter-spacing: 0.02em;
+            border-radius: 5px;
+            transition: background 0.2s ease;
         }
-        .cta a:hover { background: var(--brand-dark); }
+
+        .cta a:hover {
+            background: var(--brand-dark);
+        }
 
         /* ---- FOOTER ---- */
         .ft {
             text-align: center;
-            padding: 1.25rem 0;
-            border-top: 1px solid var(--gray-20);
-            margin-top: 0.75rem;
+            padding: 32px 0;
+            border-top: 1px solid var(--tint);
+            margin-top: 16px;
         }
 
-        .ft-acts { margin-bottom: 0.5rem; }
+        .ft-acts {
+            margin-bottom: 16px;
+        }
 
         .ft p {
-            font-size: 0.625rem;
-            color: var(--gray-30);
+            font-family: var(--font-body);
+            font-size: 0.6875rem;
+            color: var(--text-tertiary);
+            line-height: 1.6;
         }
 
-        /* ---- MOBILE ---- */
+        /* ---- ANIMATIONS ---- */
+        .fade-out {
+            animation: fade-out-anim 0.2s ease forwards;
+        }
+
+        .fade-in {
+            animation: fade-in-anim 0.2s ease forwards;
+        }
+
+        @keyframes fade-out-anim {
+            to {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes fade-in-anim {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes card-enter {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dr.stagger {
+            opacity: 0;
+            animation: card-enter 0.3s ease forwards;
+        }
+
+        /* ---- SCREEN TRANSITIONS ---- */
+        .screen.active {
+            animation: screen-fade 0.2s ease;
+        }
+
+        @keyframes screen-fade {
+            from {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ---- REDUCED MOTION ---- */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* ---- PRINT ---- */
+        @media print {
+            body {
+                background: var(--white);
+            }
+
+            .topbar,
+            .progress,
+            .q-nav,
+            .gate,
+            .btn-back,
+            .ft-acts {
+                display: none;
+            }
+
+            .wrap {
+                padding: 0;
+            }
+
+            .res {
+                padding: 0;
+            }
+        }
+
+        /* ---- MOBILE (480px) ---- */
         @media (max-width: 480px) {
-            .wrap { padding: 0 1rem; }
-            .topbar { margin: 0 -1rem; padding: 0.75rem 1rem; }
-            .progress { margin: 0 -1rem; padding: 0.625rem 1rem; }
-            .intro-lead { font-size: 1.25rem; }
-            .q-text { font-size: 1.0625rem; }
-            .opt { padding: 0.9375rem 1rem; }
-            .pos-val { font-size: 2rem; }
-            .sp { font-size: 0.4375rem; padding: 0.4rem 0; }
-            .gate-form { flex-direction: column; }
-            .gate-btn { width: 100%; padding: 0.875rem; }
+            .wrap {
+                padding: 0 16px;
+            }
+
+            .topbar {
+                margin: 0 -16px;
+                padding: 12px 16px;
+            }
+
+            .progress {
+                margin: 0 -16px;
+                padding: 16px 16px;
+            }
+
+            .progress-counter {
+                gap: 16px;
+            }
+
+            .progress-number {
+                font-size: 2.25rem;
+                min-width: 56px;
+            }
+
+            .progress-number span {
+                font-size: 1rem;
+            }
+
+            .progress-pip {
+                width: 6px;
+                height: 6px;
+            }
+
+            .progress-pip.dim-gap {
+                margin-left: 5px;
+            }
+
+            .topbar-title {
+                font-size: 0.75rem;
+            }
+
+            .intro-lead {
+                font-size: 1.5rem;
+                margin-bottom: 24px;
+            }
+
+            .intro-body {
+                font-size: 1rem;
+                margin-bottom: 32px;
+            }
+
+            .intro-meta {
+                padding: 24px;
+                margin-bottom: 32px;
+            }
+
+            .scale-row {
+                margin-bottom: 32px;
+            }
+
+            .scale-chip {
+                padding: 20px 8px 16px;
+            }
+
+            .scale-chip .n {
+                font-size: 1.125rem;
+            }
+
+            .intro {
+                padding: 40px 0 32px;
+            }
+
+            .q-wrap {
+                padding: 32px 0 24px;
+            }
+
+            .q-text {
+                font-size: 1.125rem;
+                margin-bottom: 32px;
+            }
+
+            .opts {
+                gap: 12px;
+            }
+
+            .opt {
+                padding: 14px 16px;
+                gap: 12px;
+            }
+
+            .opt-n {
+                font-size: 1.1rem;
+                width: 28px;
+            }
+
+            .opt-t {
+                font-size: 0.9375rem;
+            }
+
+            .pos-card {
+                padding: 32px 24px 28px;
+                margin-bottom: 24px;
+            }
+
+            .pos-val {
+                font-size: 2.5rem;
+            }
+
+            .spec {
+                margin-bottom: 24px;
+            }
+
+            .sp {
+                height: 6px;
+                padding: 6px 2px;
+            }
+
+            .sp.on {
+                font-size: 0.625rem;
+                padding: 10px 6px;
+                height: auto;
+            }
+
+            .pos-exp {
+                font-size: 1.0625rem;
+            }
+
+            .gate {
+                padding: 24px;
+                margin-bottom: 24px;
+            }
+
+            .gate h3 {
+                font-size: 0.9375rem;
+            }
+
+            .gate p {
+                font-size: 0.875rem;
+                margin-bottom: 16px;
+            }
+
+            .gate-form {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .gate-btn {
+                width: 100%;
+                padding: 12px 16px;
+            }
+
+            .dr {
+                padding: 16px;
+                margin-bottom: 6px;
+            }
+
+            .dr-name {
+                font-size: 0.9375rem;
+            }
+
+            .dr-tag {
+                font-size: 0.625rem;
+                padding: 4px 8px;
+            }
+
+            .dr-detail p,
+            .dr-detail .act {
+                font-size: 0.9375rem;
+            }
+
+            .cta {
+                padding: 24px;
+                margin: 24px 0;
+            }
+
+            .ft {
+                padding: 24px 0;
+            }
         }
 
+        /* ---- TABLET (768px) ---- */
         @media (min-width: 768px) {
-            .wrap { padding: 0 2rem; }
-            .topbar { margin: 0 -2rem; padding: 0.875rem 2rem; }
-            .progress { margin: 0 -2rem; padding: 0.625rem 2rem; }
-            .intro-lead { font-size: 2rem; }
-            .q-text { font-size: 1.4375rem; }
-            .pos-val { font-size: 3.25rem; }
-        }
+            .wrap {
+                padding: 0 32px;
+            }
 
-        .fade-out { animation: fo 0.12s ease forwards; }
-        .fade-in { animation: fi 0.2s ease forwards; }
-        @keyframes fo { to { opacity: 0; transform: translateY(-6px); } }
-        @keyframes fi { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+            .topbar {
+                margin: 0 -32px;
+                padding: 20px 32px;
+            }
+
+            .progress {
+                margin: 0 -32px;
+                padding: 20px 32px;
+            }
+
+            .intro-lead {
+                font-size: 2.25rem;
+            }
+
+            .intro {
+                padding: 80px 0 56px;
+            }
+
+            .q-wrap {
+                padding: 56px 0 40px;
+            }
+
+            .q-text {
+                font-size: 1.5rem;
+                margin-bottom: 56px;
+            }
+
+            .pos-val {
+                font-size: 4rem;
+            }
+
+            .pos-card {
+                padding: 56px 40px 48px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -617,21 +1135,23 @@
         </div>
 
         <div class="progress" id="prog">
-            <div class="progress-row">
-                <span class="progress-dim" id="progDim"></span>
-                <span class="progress-n" id="progN"></span>
+            <div class="progress-counter">
+                <div class="progress-number" id="progNum"></div>
+                <div class="progress-right">
+                    <div class="progress-dim" id="progDim"></div>
+                    <div class="progress-pips" id="progPips"></div>
+                </div>
             </div>
-            <div class="progress-track"><div class="progress-fill" id="progFill"></div></div>
         </div>
 
         <!-- INTRO -->
         <div class="screen active" id="sIntro">
             <div class="intro">
                 <p class="intro-lead">Most negotiators misread their position. This diagnostic measures where you actually stand.</p>
-                <p class="intro-body">Eighteen statements across six dimensions of negotiating power. For each, indicate how accurately it describes your current situation. There are no right answers, only honest ones.</p>
+                <p class="intro-body">Every negotiation has a power structure. Most people feel it but cannot name it. This diagnostic quantifies it across six dimensions so you see your position clearly before the other side does.</p>
                 <div class="intro-meta">
-                    <span>18 questions. About 3 minutes.</span>
-                    <span>No data is stored or transmitted. Everything runs in your browser.</span>
+                    <span>Takes about three minutes. Nothing is stored, nothing is transmitted, nothing leaves your device.</span>
+                    <span>You get a scored position with a dimensional breakdown. We get nothing unless you choose to share it.</span>
                 </div>
                 <div class="scale-label">Response scale</div>
                 <div class="scale-row">
@@ -687,7 +1207,7 @@
                     <p>Your aggregate score tells one story. The dimension breakdown tells six. Enter your email to see where you are strong and where you are exposed.</p>
                     <div class="gate-form">
                         <input type="email" class="gate-email" id="gEmail" placeholder="your@email.com" autocomplete="email">
-                        <button class="gate-btn" onclick="submitGate()">Show Breakdown</button>
+                        <button class="gate-btn" onclick="submitGate()"><span style="display:block;font-size:0.6875rem;font-weight:400;opacity:0.7;margin-bottom:2px;">Next step</span>Show Breakdown</button>
                     </div>
                     <div class="gate-err" id="gErr">Please enter a valid email address.</div>
                     <div class="gate-skip"><a onclick="skipGate()">Continue without email</a></div>
@@ -714,183 +1234,361 @@
         </div>
     </div>
 
-<script>
-var Q=[
-{id:'B1',d:'batna',dn:'BATNA Strength',r:0,t:'If I received a message right now saying this negotiation is dead, my first reaction would be disappointment but not panic.'},
-{id:'B2',d:'batna',dn:'BATNA Strength',r:0,t:'My alternatives are strong enough that I am negotiating this deal because it is superior, not because I lack options.'},
-{id:'B3',d:'batna',dn:'BATNA Strength',r:1,t:'If the other party could see my actual alternatives in detail, they would negotiate harder against me than they currently are.'},
-{id:'T1',d:'time',dn:'Time Position',r:0,t:'If the other party said "let\'s pause discussions for 3 months," I could agree without significant consequences.'},
-{id:'T2',d:'time',dn:'Time Position',r:0,t:'The other party has a deadline, external pressure, or time-sensitive event that I do not share.'},
-{id:'T3',d:'time',dn:'Time Position',r:1,t:'I have internal stakeholders asking me when this deal will close, and their patience is limited.'},
-{id:'I1',d:'info',dn:'Information Advantage',r:0,t:'I could write down the other party\'s top three priorities in this negotiation, in rank order, with confidence I\'m correct.'},
-{id:'I2',d:'info',dn:'Information Advantage',r:0,t:'I could describe the other party\'s best alternative if this negotiation fails: who they would turn to, how long it would take, what they would sacrifice.'},
-{id:'I3',d:'info',dn:'Information Advantage',r:1,t:'Most of what I know about the other party\'s constraints, pressures, and alternatives comes directly from what they have told me.'},
-{id:'A1',d:'authority',dn:'Authority & Decision Control',r:0,t:'If the other party accepted my ideal terms right now, I could say yes and make it binding without consulting anyone else.'},
-{id:'A2',d:'authority',dn:'Authority & Decision Control',r:0,t:'I know specifically who on the other side has final sign-off authority, their name and their role.'},
-{id:'A3',d:'authority',dn:'Authority & Decision Control',r:1,t:'Any agreement I reach would require approval from at least one other person before it becomes final.'},
-{id:'N1',d:'need',dn:'Need Asymmetry',r:0,t:'If I had to bet, I would bet that the other party\'s organization has more riding on this deal than mine does.'},
-{id:'N2',d:'need',dn:'Need Asymmetry',r:0,t:'The other party has done at least one thing (followed up quickly, offered unprompted concessions, expressed eagerness) that signals they need this deal.'},
-{id:'N3',d:'need',dn:'Need Asymmetry',r:1,t:'I have done at least one thing (followed up quickly, offered unprompted concessions, expressed eagerness) that may have signaled I need this deal.'},
-{id:'R1',d:'relationship',dn:'Relationship & Reputation',r:0,t:'The other party\'s future reputation with people I know, or their future access to opportunities I influence, depends partly on how they behave in this negotiation.'},
-{id:'R2',d:'relationship',dn:'Relationship & Reputation',r:0,t:'The other party has more to lose reputationally from this negotiation going badly than I do.'},
-{id:'R3',d:'relationship',dn:'Relationship & Reputation',r:1,t:'The other party could make a phone call or send an email to someone I care about that would create meaningful reputational cost for me.'}
-];
+    <script>
+        var Q = [
+            {id:'B1',d:'batna',dn:'BATNA Strength',r:0,t:'If I received a message right now saying this negotiation is dead, my first reaction would be disappointment but not panic.'},
+            {id:'B2',d:'batna',dn:'BATNA Strength',r:0,t:'My alternatives are strong enough that I am negotiating this deal because it is superior, not because I lack options.'},
+            {id:'B3',d:'batna',dn:'BATNA Strength',r:1,t:'If the other party could see my actual alternatives in detail, they would negotiate harder against me than they currently are.'},
+            {id:'T1',d:'time',dn:'Time Position',r:0,t:'If the other party said "let\'s pause discussions for 3 months," I could agree without significant consequences.'},
+            {id:'T2',d:'time',dn:'Time Position',r:0,t:'The other party has a deadline, external pressure, or time-sensitive event that I do not share.'},
+            {id:'T3',d:'time',dn:'Time Position',r:1,t:'I have internal stakeholders asking me when this deal will close, and their patience is limited.'},
+            {id:'I1',d:'info',dn:'Information Advantage',r:0,t:'I could write down the other party\'s top three priorities in this negotiation, in rank order, with confidence I\'m correct.'},
+            {id:'I2',d:'info',dn:'Information Advantage',r:0,t:'I could describe the other party\'s best alternative if this negotiation fails: who they would turn to, how long it would take, what they would sacrifice.'},
+            {id:'I3',d:'info',dn:'Information Advantage',r:1,t:'Most of what I know about the other party\'s constraints, pressures, and alternatives comes directly from what they have told me.'},
+            {id:'A1',d:'authority',dn:'Authority & Decision Control',r:0,t:'If the other party accepted my ideal terms right now, I could say yes and make it binding without consulting anyone else.'},
+            {id:'A2',d:'authority',dn:'Authority & Decision Control',r:0,t:'I know specifically who on the other side has final sign-off authority, their name and their role.'},
+            {id:'A3',d:'authority',dn:'Authority & Decision Control',r:1,t:'Any agreement I reach would require approval from at least one other person before it becomes final.'},
+            {id:'N1',d:'need',dn:'Need Asymmetry',r:0,t:'If I had to bet, I would bet that the other party\'s organization has more riding on this deal than mine does.'},
+            {id:'N2',d:'need',dn:'Need Asymmetry',r:0,t:'The other party has done at least one thing (followed up quickly, offered unprompted concessions, expressed eagerness) that signals they need this deal.'},
+            {id:'N3',d:'need',dn:'Need Asymmetry',r:1,t:'I have done at least one thing (followed up quickly, offered unprompted concessions, expressed eagerness) that may have signaled I need this deal.'},
+            {id:'R1',d:'relationship',dn:'Relationship & Reputation',r:0,t:'The other party\'s future reputation with people I know, or their future access to opportunities I influence, depends partly on how they behave in this negotiation.'},
+            {id:'R2',d:'relationship',dn:'Relationship & Reputation',r:0,t:'The other party has more to lose reputationally from this negotiation going badly than I do.'},
+            {id:'R3',d:'relationship',dn:'Relationship & Reputation',r:1,t:'The other party could make a phone call or send an email to someone I care about that would create meaningful reputational cost for me.'}
+        ];
 
-var D={
-batna:{n:'BATNA Strength',desc:{strong:'Your alternatives are credible and accessible. You can negotiate from choice, not necessity.',moderate:'You have alternatives, but their quality or readiness may have gaps. The other party may not fully believe you would walk away.',weak:'Limited alternatives make this deal important. You may be negotiating from necessity rather than choice.'},act:{strong:'How can you make your alternatives more visible without overplaying your hand?',moderate:'Can you make your alternatives more concrete or credible before the next round?',weak:'What would it take to develop at least one genuine alternative in the next 30 days?'}},
-time:{n:'Time Position',desc:{strong:'Time works in your favor. You can afford patience and let the other party feel the pressure of delay.',moderate:'Time pressure is roughly balanced. Neither side has a decisive timing advantage.',weak:'Deadline pressure or delay costs work against you. The other party can afford to wait; you may not.'},act:{strong:'How can you use your patience strategically without stalling unnecessarily?',moderate:'Can you identify and address any artificial urgency the other party has created?',weak:'What would it take to extend your timeline or create urgency on their side?'}},
-info:{n:'Information Advantage',desc:{strong:'Strong intelligence position. You understand their constraints better than they understand yours.',moderate:'Some insight, but gaps and unverified assumptions likely remain.',weak:'Information disadvantage. Much of what you "know" comes from what they chose to tell you.'},act:{strong:'How can you use your information advantage without revealing your sources?',moderate:'What key assumption about their situation could you verify independently?',weak:'What research could you conduct before your next interaction to close the information gap?'}},
-authority:{n:'Authority & Decision Control',desc:{strong:'You can commit independently and quickly. Your decision speed creates flexibility.',moderate:'Moderate authority constraints. Your approval process roughly matches theirs.',weak:'Significant authority constraints limit flexibility. This may be a genuine limitation or an underused tactic.'},act:{strong:'How can you use your ability to commit quickly as leverage?',moderate:'Have you tested whether their "need for approval" is genuine or tactical?',weak:'Can you reframe your approval requirement as a strategic tool rather than a constraint?'}},
-need:{n:'Need Asymmetry',desc:{strong:'They need this deal more than you do. Use this carefully to avoid creating resentment.',moderate:'Relative need is roughly balanced. Neither side has a decisive advantage.',weak:'You need this deal more than they do. Be careful not to signal desperation.'},act:{strong:'How can you leverage their need without creating resentment that damages the deal?',moderate:'What signals have you sent about your level of need? Were they intentional?',weak:'What would reduce your dependence on this specific deal or counterparty?'}},
-relationship:{n:'Relationship & Reputation',desc:{strong:'Meaningful relationship leverage. The other party has strong reasons to maintain good standing with you.',moderate:'Moderate relationship considerations. Neither party can ignore reputational consequences.',weak:'Limited relationship leverage, or reputation constraints work more against you than them.'},act:{strong:'How can you invoke relationship considerations without it feeling like a threat?',moderate:'Is the other party behaving as if they value the ongoing relationship?',weak:'If relationship leverage is limited, are you free to negotiate more aggressively?'}}
-};
+        var D = {
+            batna: {
+                n: 'BATNA Strength',
+                desc: {
+                    strong: 'Your alternatives are credible and accessible. You can negotiate from choice, not necessity.',
+                    moderate: 'You have alternatives, but their quality or readiness may have gaps. The other party may not fully believe you would walk away.',
+                    weak: 'Limited alternatives make this deal important. You may be negotiating from necessity rather than choice.'
+                },
+                act: {
+                    strong: 'How can you make your alternatives more visible without overplaying your hand?',
+                    moderate: 'Can you make your alternatives more concrete or credible before the next round?',
+                    weak: 'What would it take to develop at least one genuine alternative in the next 30 days?'
+                }
+            },
+            time: {
+                n: 'Time Position',
+                desc: {
+                    strong: 'Time works in your favor. You can afford patience and let the other party feel the pressure of delay.',
+                    moderate: 'Time pressure is roughly balanced. Neither side has a decisive timing advantage.',
+                    weak: 'Deadline pressure or delay costs work against you. The other party can afford to wait; you may not.'
+                },
+                act: {
+                    strong: 'How can you use your patience strategically without stalling unnecessarily?',
+                    moderate: 'Can you identify and address any artificial urgency the other party has created?',
+                    weak: 'What would it take to extend your timeline or create urgency on their side?'
+                }
+            },
+            info: {
+                n: 'Information Advantage',
+                desc: {
+                    strong: 'Strong intelligence position. You understand their constraints better than they understand yours.',
+                    moderate: 'Some insight, but gaps and unverified assumptions likely remain.',
+                    weak: 'Information disadvantage. Much of what you "know" comes from what they chose to tell you.'
+                },
+                act: {
+                    strong: 'How can you use your information advantage without revealing your sources?',
+                    moderate: 'What key assumption about their situation could you verify independently?',
+                    weak: 'What research could you conduct before your next interaction to close the information gap?'
+                }
+            },
+            authority: {
+                n: 'Authority & Decision Control',
+                desc: {
+                    strong: 'You can commit independently and quickly. Your decision speed creates flexibility.',
+                    moderate: 'Moderate authority constraints. Your approval process roughly matches theirs.',
+                    weak: 'Significant authority constraints limit flexibility. This may be a genuine limitation or an underused tactic.'
+                },
+                act: {
+                    strong: 'How can you use your ability to commit quickly as leverage?',
+                    moderate: 'Have you tested whether their "need for approval" is genuine or tactical?',
+                    weak: 'Can you reframe your approval requirement as a strategic tool rather than a constraint?'
+                }
+            },
+            need: {
+                n: 'Need Asymmetry',
+                desc: {
+                    strong: 'They need this deal more than you do. Use this carefully to avoid creating resentment.',
+                    moderate: 'Relative need is roughly balanced. Neither side has a decisive advantage.',
+                    weak: 'You need this deal more than they do. Be careful not to signal desperation.'
+                },
+                act: {
+                    strong: 'How can you leverage their need without creating resentment that damages the deal?',
+                    moderate: 'What signals have you sent about your level of need? Were they intentional?',
+                    weak: 'What would reduce your dependence on this specific deal or counterparty?'
+                }
+            },
+            relationship: {
+                n: 'Relationship & Reputation',
+                desc: {
+                    strong: 'Meaningful relationship leverage. The other party has strong reasons to maintain good standing with you.',
+                    moderate: 'Moderate relationship considerations. Neither party can ignore reputational consequences.',
+                    weak: 'Limited relationship leverage, or reputation constraints work more against you than them.'
+                },
+                act: {
+                    strong: 'How can you invoke relationship considerations without it feeling like a threat?',
+                    moderate: 'Is the other party behaving as if they value the ongoing relationship?',
+                    weak: 'If relationship leverage is limited, are you free to negotiate more aggressively?'
+                }
+            }
+        };
 
-var bands=[
-{mn:0,mx:25,l:'VULNERABLE',c:'v',z:0},
-{mn:26,mx:40,l:'EXPOSED',c:'e',z:1},
-{mn:41,mx:55,l:'CONTESTED',c:'c',z:2},
-{mn:56,mx:70,l:'FAVORABLE',c:'f',z:3},
-{mn:71,mx:85,l:'STRONG',c:'s',z:4},
-{mn:86,mx:100,l:'DOMINANT',c:'d',z:5}
-];
+        var bands = [
+            {mn:0,mx:25,l:'VULNERABLE',c:'v',z:0},
+            {mn:26,mx:40,l:'EXPOSED',c:'e',z:1},
+            {mn:41,mx:55,l:'CONTESTED',c:'c',z:2},
+            {mn:56,mx:70,l:'FAVORABLE',c:'f',z:3},
+            {mn:71,mx:85,l:'STRONG',c:'s',z:4},
+            {mn:86,mx:100,l:'DOMINANT',c:'d',z:5}
+        ];
 
-var expl={
-v:'Significant exposure across multiple dimensions. The other party holds most advantages. Prioritize strengthening your weakest areas before proceeding.',
-e:'Multiple areas of weakness require attention. Proceed carefully and consider whether this is the right time to finalize terms.',
-c:'Relatively balanced position. Outcome will depend heavily on preparation and execution during the negotiation itself.',
-f:'Advantages outweigh exposures. Negotiate with confidence, but stay alert to your vulnerable dimensions.',
-s:'Clear advantages across most dimensions. Focus on capturing value while avoiding overconfidence.',
-d:'Overwhelming position. The primary risk is overplaying your hand or creating resentment that damages long-term relationships.'
-};
+        var expl = {
+            v: 'You are entering this negotiation exposed. The other side likely knows it. Walking in without addressing your weakest dimensions is not confidence. It is negligence. Delay if you can. Reframe if you must. Do not concede from weakness.',
+            e: 'You have gaps the other party can exploit, and if they are prepared, they will. This is not a negotiation to wing. Identify your two weakest dimensions and build a specific strategy around each before you sit down.',
+            c: 'Neither side holds a clear advantage. This is where most negotiations are won or lost. Not on position, but on preparation. The side that has done more homework will control the conversation. Make sure that is you.',
+            f: 'You hold real leverage, but leverage unused is leverage wasted. Your advantage creates room to set the terms, anchor aggressively, and move the timeline. Press where you are strong. Do not negotiate against yourself.',
+            s: 'You are negotiating from a position most people never reach. Use it. The danger here is not the other side. It is your own tendency to leave value on the table out of politeness or premature compromise.',
+            d: 'You hold nearly every card. The negotiation risk is no longer about the deal. It is about the relationship. Dominance mishandled creates resentment that surfaces in implementation. Win the deal and preserve the partnership.'
+        };
 
-var cq=0,R={},adv=false;
+        var cq = 0, R = {}, adv = false;
 
-function show(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});document.getElementById(id).classList.add('active')}
+        function show(id) {
+            document.querySelectorAll('.screen').forEach(function(s) {
+                s.classList.remove('active');
+            });
+            document.getElementById(id).classList.add('active');
+        }
 
-function start(){cq=0;R={};show('sQ');document.getElementById('prog').classList.add('on');render()}
+        function start() {
+            cq = 0;
+            R = {};
+            show('sQ');
+            document.getElementById('prog').classList.add('on');
+            render();
+        }
 
-function render(){
-var q=Q[cq],w=document.getElementById('qWrap');
-w.classList.remove('fade-in');void w.offsetWidth;w.classList.add('fade-in');
-document.getElementById('progDim').textContent=q.dn;
-document.getElementById('progN').textContent=(cq+1)+' / '+Q.length;
-document.getElementById('progFill').style.width=(cq/Q.length*100)+'%';
-document.getElementById('qText').textContent=q.t;
-var sv=R[q.id],lb=['Not at all','Somewhat','Mostly','Exactly'];
-document.getElementById('qOpts').innerHTML=[1,2,3,4].map(function(v){
-return '<button class="opt'+(sv===v?' picked':'')+'" onclick="pick(\''+q.id+'\','+v+')" type="button"><span class="opt-n">'+v+'</span><span class="opt-t">'+lb[v-1]+'</span></button>';
-}).join('');
-document.getElementById('btnBack').style.visibility=cq===0?'hidden':'visible';
-adv=false;
-}
+        var dimOrder = ['batna','time','info','authority','need','relationship'];
 
-function pick(id,v){
-if(adv)return;
-R[id]=v;adv=true;
-document.querySelectorAll('.opt').forEach(function(o){o.classList.remove('picked')});
-event.currentTarget.classList.add('picked');
-setTimeout(function(){
-if(cq<Q.length-1){cq++;render()}else{loading()}
-},300);
-}
+        function getDimIndex(qIdx) {
+            // Each dimension has 3 questions
+            return Math.floor(qIdx / 3);
+        }
 
-function back(){if(cq>0){cq--;render()}}
+        function getQInDim(qIdx) {
+            // Position within current dimension (0, 1, or 2)
+            return qIdx % 3;
+        }
 
-function loading(){show('sLoad');document.getElementById('prog').classList.remove('on');setTimeout(results,1300)}
+        function updateProgress() {
+            // Update the big number
+            document.getElementById('progNum').innerHTML = (cq + 1) + '<span> /18</span>';
 
-function calc(){
-var dk=['batna','time','info','authority','need','relationship'],ds={},tr=0;
-dk.forEach(function(k){
-var its=Q.filter(function(q){return q.d===k}),raw=0;
-its.forEach(function(q){var s=R[q.id];if(q.r)s=5-s;raw+=s});
-ds[k]=Math.max(0,Math.min(100,Math.round(((raw-3)/9)*100)));
-tr+=raw;
-});
-return{agg:Math.max(0,Math.min(100,Math.round(((tr-18)/54)*100))),dim:ds};
-}
+            // Build pips: 18 total, grouped by dimension (3 per group, gap between groups)
+            var html = '';
+            for (var i = 0; i < Q.length; i++) {
+                var cls = 'progress-pip';
+                if (i > 0 && i % 3 === 0) cls += ' dim-gap';
+                if (i < cq) cls += ' done';
+                else if (i === cq) cls += ' active';
+                html += '<div class="' + cls + '"></div>';
+            }
+            document.getElementById('progPips').innerHTML = html;
+        }
 
-function gb(s){return bands.find(function(b){return s>=b.mn&&s<=b.mx})||bands[0]}
-function dl(s){return s>=67?'strong':s>=34?'moderate':'weak'}
+        function render() {
+            var q = Q[cq], w = document.getElementById('qWrap');
+            w.classList.remove('fade-in');
+            void w.offsetWidth;
+            w.classList.add('fade-in');
+            document.getElementById('progDim').textContent = q.dn;
+            updateProgress();
+            document.getElementById('qText').textContent = q.t;
+            var sv = R[q.id], lb = ['Not at all', 'Somewhat', 'Mostly', 'Exactly'];
+            document.getElementById('qOpts').innerHTML = [1, 2, 3, 4].map(function(v) {
+                return '<button class="opt' + (sv === v ? ' picked' : '') + '" onclick="pick(\'' + q.id + '\',' + v + ')" type="button"><span class="opt-n">' + v + '</span><span class="opt-t">' + lb[v - 1] + '</span></button>';
+            }).join('');
+            document.getElementById('btnBack').style.visibility = cq === 0 ? 'hidden' : 'visible';
+            adv = false;
+        }
 
-var bcolors={v:'var(--red)',e:'var(--orange)',c:'var(--amber)',f:'var(--green)',s:'var(--brand)',d:'var(--brand-dark)'};
+        function pick(id, v) {
+            if(adv) return;
+            R[id] = v;
+            adv = true;
+            document.querySelectorAll('.opt').forEach(function(o) {
+                o.classList.remove('picked');
+            });
+            event.currentTarget.classList.add('picked');
+            setTimeout(function() {
+                if(cq < Q.length - 1) {
+                    cq++;
+                    render();
+                } else {
+                    loading();
+                }
+            }, 300);
+        }
 
-function results(){
-var sc=calc(),b=gb(sc.agg);
-document.getElementById('posVal').textContent=b.l;
-document.getElementById('posVal').style.color=getComputedStyle(document.documentElement).getPropertyValue({'v':'--red','e':'--orange','c':'--amber','f':'--green','s':'--brand','d':'--brand-dark'}[b.c]);
-document.getElementById('posScore').textContent='Score: '+sc.agg+' / 100';
-document.querySelectorAll('.sp').forEach(function(s,i){s.classList.toggle('on',i===b.z)});
-document.getElementById('posExp').textContent=expl[b.c];
-buildBd(sc);
-window._sc=sc;
-show('sRes');
-document.getElementById('progFill').style.width='100%';
-window.scrollTo({top:0,behavior:'smooth'});
-}
+        function back() {
+            if(cq > 0) {
+                cq--;
+                render();
+            }
+        }
 
-function buildBd(sc){
-var dk=['batna','time','info','authority','need','relationship'],h='';
-dk.forEach(function(k){
-var d=D[k],s=sc.dim[k],lv=dl(s),b=gb(s),col=bcolors[b.c];
-h+='<div class="dr" onclick="this.classList.toggle(\'open\')">'+
-'<div class="dr-top"><span class="dr-name">'+d.n+'</span>'+
-'<span class="dr-tag" style="background:'+col+'">'+b.l+'</span></div>'+
-'<div class="dr-track"><div class="dr-fill" style="background:'+col+'" data-w="'+s+'"></div></div>'+
-'<div class="dr-detail"><p>'+d.desc[lv]+'</p><p class="act">'+d.act[lv]+'</p></div></div>';
-});
-document.getElementById('bdContent').innerHTML=h;
-}
+        function loading() {
+            show('sLoad');
+            document.getElementById('prog').classList.remove('on');
+            setTimeout(results, 1300);
+        }
 
-function animBars(){
-document.querySelectorAll('.dr-fill').forEach(function(f){
-setTimeout(function(){f.style.width=f.getAttribute('data-w')+'%'},80);
-});
-}
+        function calc() {
+            var dk = ['batna', 'time', 'info', 'authority', 'need', 'relationship'], ds = {}, tr = 0;
+            dk.forEach(function(k) {
+                var its = Q.filter(function(q) { return q.d === k; }), raw = 0;
+                its.forEach(function(q) {
+                    var s = R[q.id];
+                    if(q.r) s = 5 - s;
+                    raw += s;
+                });
+                ds[k] = Math.max(0, Math.min(100, Math.round(((raw - 3) / 9) * 100)));
+                tr += raw;
+            });
+            return {
+                agg: Math.max(0, Math.min(100, Math.round(((tr - 18) / 54) * 100))),
+                dim: ds
+            };
+        }
 
-function submitGate(){
-var em=document.getElementById('gEmail').value.trim();
-if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){document.getElementById('gErr').style.display='block';return}
-document.getElementById('gErr').style.display='none';
-sendLead(em);
-reveal();
-}
+        function gb(s) {
+            return bands.find(function(b) { return s >= b.mn && s <= b.mx; }) || bands[0];
+        }
 
-function skipGate(){reveal()}
+        function dl(s) {
+            return s >= 67 ? 'strong' : s >= 34 ? 'moderate' : 'weak';
+        }
 
-function reveal(){
-document.getElementById('gate').style.display='none';
-document.getElementById('bd').classList.add('on');
-animBars();
-}
+        var bcolors = {
+            v: 'var(--red)',
+            e: 'var(--orange)',
+            c: 'var(--amber)',
+            f: 'var(--green)',
+            s: 'var(--brand)',
+            d: 'var(--brand-dark)'
+        };
 
-function sendLead(em){
-var sc=window._sc,b=gb(sc.agg);
-window.parent.postMessage({
-type:'npd-lead',
-email:em,
-score:sc.agg,
-position:b.l,
-source:'NPD-Lite'
-},'*');
-}
+        function results() {
+            var sc = calc(), b = gb(sc.agg);
+            var colorMap = {
+                'v': '#991b1b',
+                'e': '#9a3412',
+                'c': '#854d0e',
+                'f': '#166534',
+                's': '#264550',
+                'd': '#1a3640'
+            };
+            document.getElementById('posVal').textContent = b.l;
+            document.getElementById('posVal').style.color = colorMap[b.c];
+            document.getElementById('posScore').textContent = 'Score: ' + sc.agg + ' / 100';
+            document.querySelectorAll('.sp').forEach(function(s, i) {
+                s.classList.toggle('on', i === b.z);
+            });
+            document.getElementById('posExp').textContent = expl[b.c];
+            buildBd(sc);
+            window._sc = sc;
+            show('sRes');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
 
-function restart(){
-R={};cq=0;
-document.getElementById('gate').style.display='block';
-document.getElementById('bd').classList.remove('on');
-document.getElementById('gEmail').value='';
-document.getElementById('prog').classList.remove('on');
-show('sIntro');
-window.scrollTo({top:0});
-}
+        function buildBd(sc) {
+            var dk = ['batna', 'time', 'info', 'authority', 'need', 'relationship'], h = '';
+            var colorMap = {
+                'v': '#991b1b',
+                'e': '#9a3412',
+                'c': '#854d0e',
+                'f': '#166534',
+                's': '#264550',
+                'd': '#1a3640'
+            };
+            dk.forEach(function(k, idx) {
+                var d = D[k], s = sc.dim[k], lv = dl(s), b = gb(s), col = colorMap[b.c];
+                h += '<div class="dr" style="animation-delay:' + (idx * 80) + 'ms" onclick="this.classList.toggle(\'open\')">' +
+                    '<div class="dr-top"><span class="dr-name">' + d.n + '</span>' +
+                    '<span class="dr-tag" style="background:' + col + '">' + b.l + '</span></div>' +
+                    '<div class="dr-track"><div class="dr-fill" style="background:' + col + '" data-w="' + s + '"></div></div>' +
+                    '<div class="dr-detail"><p>' + d.desc[lv] + '</p><p class="act">' + d.act[lv] + '</p></div></div>';
+            });
+            document.getElementById('bdContent').innerHTML = h;
+        }
 
-// Report height to parent for iframe auto-resize
-function postHeight(){
-var el=document.querySelector('.wrap');
-var h=Math.max(el?el.offsetHeight:0, document.body.scrollHeight);
-window.parent.postMessage({type:'npd-height',height:h},'*');
-}
-window.addEventListener('load',function(){postHeight();setInterval(postHeight,300)});
-</script>
+        function animBars() {
+            document.querySelectorAll('.dr-fill').forEach(function(f) {
+                setTimeout(function() {
+                    f.style.width = f.getAttribute('data-w') + '%';
+                }, 80);
+            });
+        }
+
+        function submitGate() {
+            var em = document.getElementById('gEmail').value.trim();
+            if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) {
+                document.getElementById('gErr').style.display = 'block';
+                return;
+            }
+            document.getElementById('gErr').style.display = 'none';
+            sendLead(em);
+            reveal();
+        }
+
+        function skipGate() {
+            reveal();
+        }
+
+        function reveal() {
+            document.getElementById('gate').style.display = 'none';
+            document.getElementById('bd').classList.add('on');
+            document.querySelectorAll('.dr').forEach(function(c) { c.classList.add('stagger'); });
+            animBars();
+        }
+
+        function sendLead(em) {
+            var sc = window._sc, b = gb(sc.agg);
+            window.parent.postMessage({
+                type: 'npd-lead',
+                email: em,
+                score: sc.agg,
+                position: b.l,
+                source: 'NPD-Lite'
+            }, '*');
+        }
+
+        function restart() {
+            R = {};
+            cq = 0;
+            document.getElementById('gate').style.display = 'block';
+            document.getElementById('bd').classList.remove('on');
+            document.getElementById('gEmail').value = '';
+            document.getElementById('prog').classList.remove('on');
+            show('sIntro');
+            window.scrollTo({top: 0});
+        }
+
+        // Report height to parent for iframe auto-resize
+        function postHeight() {
+            var el = document.querySelector('.wrap');
+            var h = Math.max(el ? el.offsetHeight : 0, document.body.scrollHeight);
+            window.parent.postMessage({type: 'npd-height', height: h}, '*');
+        }
+
+        window.addEventListener('load', function() {
+            postHeight();
+            setInterval(postHeight, 300);
+        });
+    </script>
 </body>
 </html>
