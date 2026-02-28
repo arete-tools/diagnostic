@@ -1580,9 +1580,8 @@
 
         // ---- IFRAME HEIGHT MANAGEMENT ----
         var isIframed = (window.self !== window.top);
-        var maxQuestionHeight = 0;
+        var heightFloor = 0;
         var currentScreen = 'sIntro';
-        var lastReportedHeight = 0;
 
         if (isIframed) {
             var iframeStyle = document.createElement('style');
@@ -1590,16 +1589,18 @@
             document.head.appendChild(iframeStyle);
         }
 
-        // Wrap show() to track screen changes and reset question height lock
+        // Track screen changes: only reset height floor on major transitions
         var _origShow = show;
         show = function(id) {
             var prevScreen = currentScreen;
             currentScreen = id;
-            if (prevScreen !== id) {
-                maxQuestionHeight = 0;
-                lastReportedHeight = 0; // force report on screen change
+            // Reset floor only when leaving results or going back to intro
+            if (id === 'sIntro' || id === 'sLoad') {
+                heightFloor = 0;
             }
             _origShow(id);
+            // Force immediate height report on screen change
+            postHeight();
         };
 
         function postHeight() {
@@ -1607,20 +1608,13 @@
             var h = Math.max(el ? el.offsetHeight : 0, document.body.scrollHeight);
 
             if (isIframed) {
-                // During questions: grow only, never shrink
-                if (currentScreen === 'sQ') {
-                    if (h > maxQuestionHeight) {
-                        maxQuestionHeight = h;
-                    }
-                    h = maxQuestionHeight;
+                // Grow only: never report a height smaller than what we've already set
+                // This prevents ALL shrink-triggered reflows (questions, card collapse, etc.)
+                if (h > heightFloor) {
+                    heightFloor = h;
+                } else {
+                    h = heightFloor;
                 }
-
-                // Only report if height changed by more than 10px
-                // Prevents micro-adjustments that cause horizontal reflow jitter
-                if (Math.abs(h - lastReportedHeight) < 10) {
-                    return;
-                }
-                lastReportedHeight = h;
             }
 
             window.parent.postMessage({type: 'npd-height', height: h}, '*');
