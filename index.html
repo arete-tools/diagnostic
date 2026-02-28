@@ -1552,6 +1552,31 @@
         function reveal() {
             document.getElementById('gate').style.display = 'none';
             document.getElementById('bd').classList.add('on');
+
+            // In iframe: pre-calculate height with all cards expanded BEFORE stagger animation
+            // This sets the height floor so no individual card expansion triggers a resize
+            if (window.self !== window.top) {
+                var cards = document.querySelectorAll('.dr');
+                // Temporarily disable animations during measurement
+                var noAnim = document.createElement('style');
+                noAnim.textContent = '* { animation: none !important; transition: none !important; }';
+                document.head.appendChild(noAnim);
+                // Expand all, measure, collapse
+                cards.forEach(function(c) { c.classList.add('open'); });
+                void document.body.offsetHeight; // force sync layout
+                var h = Math.max(
+                    document.querySelector('.wrap') ? document.querySelector('.wrap').offsetHeight : 0,
+                    document.body.scrollHeight
+                );
+                heightFloor = h + 20; // small buffer for rounding
+                window.parent.postMessage({type: 'npd-height', height: heightFloor}, '*');
+                cards.forEach(function(c) { c.classList.remove('open'); });
+                // Re-enable animations
+                document.head.removeChild(noAnim);
+                void document.body.offsetHeight; // force layout before animations start
+            }
+
+            // Now add stagger animation and animate bars
             document.querySelectorAll('.dr').forEach(function(c) { c.classList.add('stagger'); });
             animBars();
         }
@@ -1587,19 +1612,19 @@
             var iframeStyle = document.createElement('style');
             iframeStyle.textContent = '.intro, .q-wrap { min-height: auto !important; } .q-wrap { min-height: 520px !important; }';
             document.head.appendChild(iframeStyle);
+
+            // Ask parent to add transition to iframe for smooth height changes
+            // This is the key fix: without transition, every height change is an instant reflow
+            window.parent.postMessage({type: 'npd-init', transition: 'height 0.3s ease'}, '*');
         }
 
-        // Track screen changes: only reset height floor on major transitions
         var _origShow = show;
         show = function(id) {
-            var prevScreen = currentScreen;
             currentScreen = id;
-            // Reset floor only when leaving results or going back to intro
             if (id === 'sIntro' || id === 'sLoad') {
                 heightFloor = 0;
             }
             _origShow(id);
-            // Force immediate height report on screen change
             postHeight();
         };
 
@@ -1608,8 +1633,7 @@
             var h = Math.max(el ? el.offsetHeight : 0, document.body.scrollHeight);
 
             if (isIframed) {
-                // Grow only: never report a height smaller than what we've already set
-                // This prevents ALL shrink-triggered reflows (questions, card collapse, etc.)
+                // Grow only: never shrink
                 if (h > heightFloor) {
                     heightFloor = h;
                 } else {
