@@ -1580,25 +1580,24 @@
 
         // ---- IFRAME HEIGHT MANAGEMENT ----
         var isIframed = (window.self !== window.top);
-        var maxHeight = 0;
+        var maxQuestionHeight = 0;
         var currentScreen = 'sIntro';
+        var lastReportedHeight = 0;
 
-        // In iframe: disable viewport-based min-heights (prevents infinite resize loop)
-        // and set a stable floor for question screens
         if (isIframed) {
             var iframeStyle = document.createElement('style');
             iframeStyle.textContent = '.intro, .q-wrap { min-height: auto !important; } .q-wrap { min-height: 520px !important; }';
             document.head.appendChild(iframeStyle);
         }
 
-        // Wrap show() to track screen changes and reset max height on screen transitions
+        // Wrap show() to track screen changes and reset question height lock
         var _origShow = show;
         show = function(id) {
             var prevScreen = currentScreen;
             currentScreen = id;
-            // Reset max height on any screen change so results/intro can be shorter than questions
             if (prevScreen !== id) {
-                maxHeight = 0;
+                maxQuestionHeight = 0;
+                lastReportedHeight = 0; // force report on screen change
             }
             _origShow(id);
         };
@@ -1606,15 +1605,24 @@
         function postHeight() {
             var el = document.querySelector('.wrap');
             var h = Math.max(el ? el.offsetHeight : 0, document.body.scrollHeight);
+
             if (isIframed) {
-                // During question flow: only grow, never shrink (prevents flicker)
+                // During questions: grow only, never shrink
                 if (currentScreen === 'sQ') {
-                    if (h > maxHeight) {
-                        maxHeight = h;
+                    if (h > maxQuestionHeight) {
+                        maxQuestionHeight = h;
                     }
-                    h = maxHeight;
+                    h = maxQuestionHeight;
                 }
+
+                // Only report if height changed by more than 10px
+                // Prevents micro-adjustments that cause horizontal reflow jitter
+                if (Math.abs(h - lastReportedHeight) < 10) {
+                    return;
+                }
+                lastReportedHeight = h;
             }
+
             window.parent.postMessage({type: 'npd-height', height: h}, '*');
         }
 
