@@ -29,13 +29,11 @@
             --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.08);
             --shadow-lg: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-
         body {
             font-family: var(--font-body);
             background: var(--brand-faint);
@@ -44,7 +42,6 @@
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
-
         .wrap {
             max-width: 620px;
             margin: 0 auto;
@@ -52,15 +49,12 @@
             display: flex;
             flex-direction: column;
         }
-
         .screen {
             display: none;
         }
-
         .screen.active {
             display: block;
         }
-
         /* ---- TOP BAR ---- */
         .topbar {
             margin: 0 -24px;
@@ -70,7 +64,6 @@
             position: relative;
             z-index: 10;
         }
-
         .topbar-title {
             font-family: var(--font-display);
             font-weight: 900;
@@ -79,7 +72,6 @@
             letter-spacing: 0.12em;
             text-transform: uppercase;
         }
-
         /* ---- PROGRESS (Typographic Counter) ---- */
         .progress {
             display: none;
@@ -88,17 +80,14 @@
             background: var(--white);
             border-bottom: 1px solid var(--tint);
         }
-
         .progress.on {
             display: block;
         }
-
         .progress-counter {
             display: flex;
             align-items: center;
             gap: 24px;
         }
-
         .progress-number {
             font-family: var(--font-display);
             font-size: 3rem;
@@ -110,18 +99,15 @@
             text-align: center;
             transition: all 0.2s ease;
         }
-
         .progress-number span {
             font-size: 1.25rem;
             font-weight: 700;
             color: var(--text-secondary);
             letter-spacing: 0;
         }
-
         .progress-right {
             flex: 1;
         }
-
         .progress-dim {
             font-family: var(--font-display);
             font-size: 0.75rem;
@@ -131,12 +117,10 @@
             letter-spacing: 0.1em;
             margin-bottom: 10px;
         }
-
         .progress-pips {
             display: flex;
             gap: 4px;
         }
-
         .progress-pip {
             width: 8px;
             height: 8px;
@@ -144,20 +128,16 @@
             background: #e8e5e0;
             transition: all 0.25s ease;
         }
-
         .progress-pip.done {
             background: var(--brand);
         }
-
         .progress-pip.active {
             background: var(--brand);
             box-shadow: 0 0 0 3px rgba(38, 69, 80, 0.15);
         }
-
         .progress-pip.dim-gap {
             margin-left: 8px;
         }
-
         /* ---- INTRO ---- */
         .intro {
             padding: 64px 0 48px;
@@ -165,7 +145,6 @@
             display: flex;
             flex-direction: column;
         }
-
         .intro-lead {
             font-family: var(--font-display);
             font-size: 2rem;
@@ -175,7 +154,6 @@
             margin-bottom: 32px;
             letter-spacing: -0.01em;
         }
-
         .intro-body {
             font-family: var(--font-display);
             font-size: 1.0625rem;
@@ -185,7 +163,6 @@
             margin-bottom: 48px;
             letter-spacing: -0.01em;
         }
-
         .intro-meta {
             font-family: var(--font-display);
             font-size: 0.9375rem;
@@ -198,15 +175,12 @@
             line-height: 1.8;
             border-radius: 3px;
         }
-
         .intro-meta span {
             display: block;
         }
-
         .intro-meta span:not(:last-child) {
             margin-bottom: 8px;
         }
-
         .scale-label {
             font-family: var(--font-display);
             font-size: 0.75rem;
@@ -216,13 +190,11 @@
             letter-spacing: 0.1em;
             margin-bottom: 16px;
         }
-
         .scale-row {
             display: flex;
             gap: 8px;
             margin-bottom: 48px;
         }
-
         .scale-chip {
             flex: 1;
             text-align: center;
@@ -232,7 +204,6 @@
             border-radius: 5px;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
         }
-
         .scale-chip .n {
             display: block;
             font-family: var(--font-display);
@@ -241,7 +212,6 @@
             color: var(--brand);
             margin-bottom: 4px;
         }
-
         .scale-chip .t {
             font-family: var(--font-display);
             font-size: 0.6875rem;
@@ -250,7 +220,6 @@
             text-transform: uppercase;
             letter-spacing: 0.08em;
         }
-
         /* ---- BUTTONS ---- */
         .btn {
             font-family: var(--font-display);
@@ -264,26 +233,21 @@
             -webkit-tap-highlight-color: transparent;
             letter-spacing: 0.02em;
         }
-
         .btn-brand {
             background: var(--brand);
             color: var(--white);
         }
-
         .btn-brand:hover {
             background: var(--brand-dark);
         }
-
         .btn-brand:active {
             transform: scale(0.98);
         }
-
         .btn-full {
             display: block;
             width: 100%;
             margin-top: auto;
         }
-
         .btn-back {
             background: none;
             border: none;
@@ -295,11 +259,9 @@
             padding: 8px 0;
             transition: color 0.15s ease;
         }
-
         .btn-back:hover {
             color: var(--brand);
         }
-
         /* ---- QUESTION ---- */
         .q-wrap {
             padding: 48px 0 32px;
@@ -307,7 +269,6 @@
             display: flex;
             flex-direction: column;
         }
-
         .q-text {
             font-family: var(--font-body);
             font-size: 1.375rem;
@@ -317,13 +278,11 @@
             margin-bottom: 48px;
             letter-spacing: -0.01em;
         }
-
         .opts {
             display: flex;
             flex-direction: column;
             gap: 16px;
         }
-
         .opt {
             display: flex;
             align-items: center;
@@ -338,18 +297,15 @@
             user-select: none;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
         }
-
         .opt:hover {
             border-color: var(--brand-light);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
         }
-
         .opt.picked {
             border-color: var(--brand);
             background: var(--brand);
             box-shadow: 0 2px 6px rgba(38, 69, 80, 0.15);
         }
-
         .opt-n {
             font-family: var(--font-display);
             font-weight: 900;
@@ -359,27 +315,22 @@
             text-align: center;
             flex-shrink: 0;
         }
-
         .opt.picked .opt-n {
             color: var(--white);
         }
-
         .opt-t {
             font-family: var(--font-display);
             font-size: 1rem;
             color: var(--text-primary);
             font-weight: 700;
         }
-
         .opt.picked .opt-t {
             color: var(--white);
         }
-
         .q-nav {
             padding: 24px 0;
             margin-top: auto;
         }
-
         /* ---- LOADING ---- */
         .ld {
             display: flex;
@@ -387,7 +338,6 @@
             align-items: center;
             padding: 128px 0;
         }
-
         .spin {
             width: 40px;
             height: 40px;
@@ -397,25 +347,21 @@
             animation: sp 0.7s linear infinite;
             margin-bottom: 16px;
         }
-
         @keyframes sp {
             to {
                 transform: rotate(360deg);
             }
         }
-
         .ld p {
             font-family: var(--font-display);
             font-size: 0.9375rem;
             font-weight: 700;
             color: var(--text-secondary);
         }
-
         /* ---- RESULTS ---- */
         .res {
             padding: 24px 0;
         }
-
         .res-label {
             font-family: var(--font-display);
             font-size: 0.75rem;
@@ -426,7 +372,6 @@
             text-align: center;
             margin-bottom: 32px;
         }
-
         .pos-card {
             background: var(--white);
             border-radius: 3px;
@@ -436,7 +381,6 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
             animation: reveal-position 0.5s ease-out;
         }
-
         @keyframes reveal-position {
             from {
                 opacity: 0;
@@ -447,7 +391,6 @@
                 transform: translateY(0);
             }
         }
-
         .pos-val {
             font-family: var(--font-display);
             font-weight: 900;
@@ -457,7 +400,6 @@
             text-transform: uppercase;
             color: var(--brand);
         }
-
         .pos-score {
             font-family: var(--font-body);
             font-size: 0.9375rem;
@@ -466,14 +408,12 @@
             letter-spacing: 0.02em;
             margin-bottom: 32px;
         }
-
         .spec {
             display: flex;
             align-items: center;
             gap: 3px;
             margin-bottom: 32px;
         }
-
         .sp {
             flex: 1;
             padding: 8px 2px;
@@ -489,7 +429,6 @@
             border-radius: 3px;
             height: 8px;
         }
-
         .sp.on {
             opacity: 1;
             flex: 2.5;
@@ -500,31 +439,24 @@
             border-radius: 4px;
             box-shadow: var(--shadow-lg);
         }
-
         .sp.v {
             background: var(--red);
         }
-
         .sp.e {
             background: var(--orange);
         }
-
         .sp.c {
             background: var(--amber);
         }
-
         .sp.f {
             background: var(--green);
         }
-
         .sp.s {
             background: var(--brand);
         }
-
         .sp.d {
             background: var(--brand-dark);
         }
-
         .pos-exp {
             font-family: var(--font-display);
             font-size: 1.1875rem;
@@ -535,7 +467,6 @@
             letter-spacing: -0.01em;
             animation: reveal-text 0.5s ease-out 0.35s both;
         }
-
         @keyframes reveal-text {
             from {
                 opacity: 0;
@@ -544,7 +475,6 @@
                 opacity: 1;
             }
         }
-
         /* ---- GATE ---- */
         .gate {
             background: var(--white);
@@ -554,7 +484,6 @@
             margin-bottom: 32px;
             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
         }
-
         .gate h3 {
             font-family: var(--font-display);
             font-weight: 900;
@@ -563,7 +492,6 @@
             margin-bottom: 8px;
             letter-spacing: -0.01em;
         }
-
         .gate p {
             font-family: var(--font-body);
             font-size: 0.9375rem;
@@ -571,13 +499,11 @@
             color: var(--text-primary);
             margin-bottom: 24px;
         }
-
         .gate-form {
             display: flex;
             gap: 8px;
             margin-bottom: 16px;
         }
-
         .gate-email {
             flex: 1;
             font-family: var(--font-body);
@@ -589,16 +515,13 @@
             background: var(--brand-faint);
             transition: border-color 0.15s ease;
         }
-
         .gate-email:focus {
             border-color: var(--brand);
             background: var(--white);
         }
-
         .gate-email::placeholder {
             color: #b0b0b2;
         }
-
         .gate-btn {
             font-family: var(--font-display);
             font-weight: 700;
@@ -613,15 +536,12 @@
             letter-spacing: 0.02em;
             transition: background 0.2s ease;
         }
-
         .gate-btn:hover {
             background: var(--brand-dark);
         }
-
         .gate-btn:active {
             transform: scale(0.98);
         }
-
         .gate-err {
             font-family: var(--font-body);
             font-size: 0.75rem;
@@ -629,11 +549,9 @@
             margin-top: 8px;
             display: none;
         }
-
         .gate-skip {
             text-align: right;
         }
-
         .gate-skip a {
             font-family: var(--font-body);
             font-size: 0.75rem;
@@ -642,20 +560,16 @@
             cursor: pointer;
             transition: color 0.15s ease;
         }
-
         .gate-skip a:hover {
             color: var(--text-secondary);
         }
-
         /* ---- BREAKDOWN ---- */
         .bd {
             display: none;
         }
-
         .bd.on {
             display: block;
         }
-
         .bd-label {
             font-family: var(--font-display);
             font-size: 0.75rem;
@@ -665,7 +579,6 @@
             color: var(--text-secondary);
             margin-bottom: 16px;
         }
-
         .dr {
             background: var(--white);
             border-radius: 3px;
@@ -675,18 +588,15 @@
             transition: box-shadow 0.15s ease;
             box-shadow: var(--shadow-sm);
         }
-
         .dr:hover {
             box-shadow: var(--shadow-md);
         }
-
         .dr-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
         }
-
         .dr-name {
             font-family: var(--font-display);
             font-weight: 900;
@@ -694,7 +604,6 @@
             color: #000;
             letter-spacing: -0.01em;
         }
-
         .dr-tag {
             font-family: var(--font-display);
             font-size: 0.6875rem;
@@ -705,7 +614,6 @@
             letter-spacing: 0.06em;
             border-radius: 3px;
         }
-
         .dr-track {
             height: 6px;
             background: #e8e5e0;
@@ -713,25 +621,21 @@
             overflow: hidden;
             margin-bottom: 12px;
         }
-
         .dr-fill {
             height: 100%;
             border-radius: 3px;
             width: 0%;
             transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
         .dr-detail {
             display: none;
             margin-top: 16px;
             padding-top: 16px;
             border-top: 1px solid var(--tint);
         }
-
         .dr.open .dr-detail {
             display: block;
         }
-
         .dr-detail p {
             font-family: var(--font-body);
             font-size: 1.0625rem;
@@ -739,7 +643,6 @@
             color: var(--text-primary);
             margin-bottom: 12px;
         }
-
         .dr-detail .act {
             font-family: var(--font-body);
             font-size: 1.0625rem;
@@ -747,7 +650,6 @@
             color: var(--brand);
             line-height: 1.7;
         }
-
         /* ---- CTA ---- */
         .cta {
             border-left: 3px solid var(--brand);
@@ -757,7 +659,6 @@
             margin: 32px 0;
             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
         }
-
         .cta h3 {
             font-family: var(--font-display);
             font-weight: 900;
@@ -766,7 +667,6 @@
             margin-bottom: 8px;
             letter-spacing: -0.01em;
         }
-
         .cta p {
             font-family: var(--font-body);
             font-size: 0.9375rem;
@@ -774,7 +674,6 @@
             color: var(--text-primary);
             margin-bottom: 24px;
         }
-
         .cta a {
             display: inline-block;
             font-family: var(--font-display);
@@ -788,11 +687,9 @@
             border-radius: 5px;
             transition: background 0.2s ease;
         }
-
         .cta a:hover {
             background: var(--brand-dark);
         }
-
         /* ---- FOOTER ---- */
         .ft {
             text-align: center;
@@ -800,34 +697,28 @@
             border-top: 1px solid var(--tint);
             margin-top: 16px;
         }
-
         .ft-acts {
             margin-bottom: 16px;
         }
-
         .ft p {
             font-family: var(--font-body);
             font-size: 0.6875rem;
             color: var(--text-tertiary);
             line-height: 1.6;
         }
-
         /* ---- ANIMATIONS ---- */
         .fade-out {
             animation: fade-out-anim 0.2s ease forwards;
         }
-
         .fade-in {
             animation: fade-in-anim 0.2s ease forwards;
         }
-
         @keyframes fade-out-anim {
             to {
                 opacity: 0;
                 transform: translateY(-8px);
             }
         }
-
         @keyframes fade-in-anim {
             from {
                 opacity: 0;
@@ -838,7 +729,6 @@
                 transform: translateY(0);
             }
         }
-
         @keyframes card-enter {
             from {
                 opacity: 0;
@@ -849,17 +739,14 @@
                 transform: translateY(0);
             }
         }
-
         .dr.stagger {
             opacity: 0;
             animation: card-enter 0.3s ease forwards;
         }
-
         /* ---- SCREEN TRANSITIONS ---- */
         .screen.active {
             animation: screen-fade 0.2s ease;
         }
-
         @keyframes screen-fade {
             from {
                 opacity: 0;
@@ -870,7 +757,6 @@
                 transform: translateY(0);
             }
         }
-
         /* ---- REDUCED MOTION ---- */
         @media (prefers-reduced-motion: reduce) {
             * {
@@ -879,13 +765,11 @@
                 transition-duration: 0.01ms !important;
             }
         }
-
         /* ---- PRINT ---- */
         @media print {
             body {
                 background: var(--white);
             }
-
             .topbar,
             .progress,
             .q-nav,
@@ -894,234 +778,184 @@
             .ft-acts {
                 display: none;
             }
-
             .wrap {
                 padding: 0;
             }
-
             .res {
                 padding: 0;
             }
         }
-
         /* ---- MOBILE (480px) ---- */
         @media (max-width: 480px) {
             .wrap {
                 padding: 0 16px;
             }
-
             .topbar {
                 margin: 0 -16px;
                 padding: 12px 16px;
             }
-
             .progress {
                 margin: 0 -16px;
                 padding: 16px 16px;
             }
-
             .progress-counter {
                 gap: 16px;
             }
-
             .progress-number {
                 font-size: 2.25rem;
                 min-width: 56px;
             }
-
             .progress-number span {
                 font-size: 1rem;
             }
-
             .progress-pip {
                 width: 6px;
                 height: 6px;
             }
-
             .progress-pip.dim-gap {
                 margin-left: 5px;
             }
-
             .topbar-title {
                 font-size: 0.75rem;
             }
-
             .intro-lead {
                 font-size: 1.5rem;
                 margin-bottom: 24px;
             }
-
             .intro-body {
                 font-size: 1rem;
                 margin-bottom: 32px;
             }
-
             .intro-meta {
                 padding: 24px;
                 margin-bottom: 32px;
             }
-
             .scale-row {
                 margin-bottom: 32px;
             }
-
             .scale-chip {
                 padding: 20px 8px 16px;
             }
-
             .scale-chip .n {
                 font-size: 1.125rem;
             }
-
             .intro {
                 padding: 40px 0 32px;
             }
-
             .q-wrap {
                 padding: 32px 0 24px;
             }
-
             .q-text {
                 font-size: 1.125rem;
                 margin-bottom: 32px;
             }
-
             .opts {
                 gap: 12px;
             }
-
             .opt {
                 padding: 14px 16px;
                 gap: 12px;
             }
-
             .opt-n {
                 font-size: 1.1rem;
                 width: 28px;
             }
-
             .opt-t {
                 font-size: 0.9375rem;
             }
-
             .pos-card {
                 padding: 32px 24px 28px;
                 margin-bottom: 24px;
             }
-
             .pos-val {
                 font-size: 2.5rem;
             }
-
             .spec {
                 margin-bottom: 24px;
             }
-
             .sp {
                 height: 6px;
                 padding: 6px 2px;
             }
-
             .sp.on {
                 font-size: 0.625rem;
                 padding: 10px 6px;
                 height: auto;
             }
-
             .pos-exp {
                 font-size: 1.0625rem;
             }
-
             .gate {
                 padding: 24px;
                 margin-bottom: 24px;
             }
-
             .gate h3 {
                 font-size: 0.9375rem;
             }
-
             .gate p {
                 font-size: 0.875rem;
                 margin-bottom: 16px;
             }
-
             .gate-form {
                 flex-direction: column;
                 gap: 12px;
             }
-
             .gate-btn {
                 width: 100%;
                 padding: 12px 16px;
             }
-
             .dr {
                 padding: 16px;
                 margin-bottom: 6px;
             }
-
             .dr-name {
                 font-size: 0.9375rem;
             }
-
             .dr-tag {
                 font-size: 0.625rem;
                 padding: 4px 8px;
             }
-
             .dr-detail p,
             .dr-detail .act {
                 font-size: 0.9375rem;
             }
-
             .cta {
                 padding: 24px;
                 margin: 24px 0;
             }
-
             .ft {
                 padding: 24px 0;
             }
         }
-
         /* ---- TABLET (768px) ---- */
         @media (min-width: 768px) {
             .wrap {
                 padding: 0 32px;
             }
-
             .topbar {
                 margin: 0 -32px;
                 padding: 20px 32px;
             }
-
             .progress {
                 margin: 0 -32px;
                 padding: 20px 32px;
             }
-
             .intro-lead {
                 font-size: 2.25rem;
             }
-
             .intro {
                 padding: 80px 0 56px;
             }
-
             .q-wrap {
                 padding: 56px 0 40px;
             }
-
             .q-text {
                 font-size: 1.5rem;
                 margin-bottom: 56px;
             }
-
             .pos-val {
                 font-size: 4rem;
             }
-
             .pos-card {
                 padding: 56px 40px 48px;
             }
@@ -1133,7 +967,6 @@
         <div class="topbar">
             <span class="topbar-title">Negotiation Power Diagnostic</span>
         </div>
-
         <div class="progress" id="prog">
             <div class="progress-counter">
                 <div class="progress-number" id="progNum"></div>
@@ -1143,7 +976,6 @@
                 </div>
             </div>
         </div>
-
         <!-- INTRO -->
         <div class="screen active" id="sIntro">
             <div class="intro">
@@ -1163,7 +995,6 @@
                 <button class="btn btn-brand btn-full" onclick="start()">Begin Assessment</button>
             </div>
         </div>
-
         <!-- QUESTIONS -->
         <div class="screen" id="sQ">
             <div class="q-wrap" id="qWrap">
@@ -1174,7 +1005,6 @@
                 <button class="btn-back" id="btnBack" onclick="back()">&larr; Previous</button>
             </div>
         </div>
-
         <!-- LOADING -->
         <div class="screen" id="sLoad">
             <div class="ld">
@@ -1182,12 +1012,10 @@
                 <p>Calculating your position</p>
             </div>
         </div>
-
         <!-- RESULTS -->
         <div class="screen" id="sRes">
             <div class="res">
                 <div class="res-label">Your Negotiation Power Position</div>
-
                 <div class="pos-card">
                     <div class="pos-val" id="posVal"></div>
                     <div class="pos-score" id="posScore"></div>
@@ -1201,7 +1029,6 @@
                     </div>
                     <div class="pos-exp" id="posExp"></div>
                 </div>
-
                 <div class="gate" id="gate">
                     <h3>Dimension breakdown</h3>
                     <p>Your aggregate score tells one story. The dimension breakdown tells six. Enter your email to see where you are strong and where you are exposed.</p>
@@ -1212,18 +1039,15 @@
                     <div class="gate-err" id="gErr">Please enter a valid email address.</div>
                     <div class="gate-skip"><a onclick="skipGate()">Continue without email</a></div>
                 </div>
-
                 <div class="bd" id="bd">
                     <div class="bd-label">Dimension Breakdown</div>
                     <div id="bdContent"></div>
                 </div>
-
                 <div class="cta">
                     <h3>Want the full picture?</h3>
                     <p>This is a directional read across 18 items. The full diagnostic covers 92 items with reliability scoring and facilitator-led analysis. It is how we start every engagement.</p>
                     <a href="https://areteadvisors.pro/connect" target="_top">Start a conversation</a>
                 </div>
-
                 <div class="ft">
                     <div class="ft-acts">
                         <button class="btn-back" onclick="restart()">Take again</button>
@@ -1233,7 +1057,6 @@
             </div>
         </div>
     </div>
-
     <script>
         var Q = [
             {id:'B1',d:'batna',dn:'BATNA Strength',r:0,t:'If I received a message right now saying this negotiation is dead, my first reaction would be disappointment but not panic.'},
@@ -1255,7 +1078,6 @@
             {id:'R2',d:'relationship',dn:'Relationship & Reputation',r:0,t:'The other party has more to lose reputationally from this negotiation going badly than I do.'},
             {id:'R3',d:'relationship',dn:'Relationship & Reputation',r:1,t:'The other party could make a phone call or send an email to someone I care about that would create meaningful reputational cost for me.'}
         ];
-
         var D = {
             batna: {
                 n: 'BATNA Strength',
@@ -1336,7 +1158,6 @@
                 }
             }
         };
-
         var bands = [
             {mn:0,mx:25,l:'VULNERABLE',c:'v',z:0},
             {mn:26,mx:40,l:'EXPOSED',c:'e',z:1},
@@ -1345,7 +1166,6 @@
             {mn:71,mx:85,l:'STRONG',c:'s',z:4},
             {mn:86,mx:100,l:'DOMINANT',c:'d',z:5}
         ];
-
         var expl = {
             v: 'You are entering this negotiation exposed. The other side likely knows it. Walking in without addressing your weakest dimensions is not confidence. It is negligence. Delay if you can. Reframe if you must. Do not concede from weakness.',
             e: 'You have gaps the other party can exploit, and if they are prepared, they will. This is not a negotiation to wing. Identify your two weakest dimensions and build a specific strategy around each before you sit down.',
@@ -1354,40 +1174,47 @@
             s: 'You are negotiating from a position most people never reach. Use it. The danger here is not the other side. It is your own tendency to leave value on the table out of politeness or premature compromise.',
             d: 'You hold nearly every card. The negotiation risk is no longer about the deal. It is about the relationship. Dominance mishandled creates resentment that surfaces in implementation. Win the deal and preserve the partnership.'
         };
-
         var cq = 0, R = {}, adv = false;
-
+        var qTextHeightLocked = false;
+        function lockQTextHeight() {
+            if (qTextHeightLocked) return;
+            var el = document.getElementById('qText');
+            var maxH = 0;
+            for (var i = 0; i < Q.length; i++) {
+                el.textContent = Q[i].t;
+                var h = el.offsetHeight;
+                if (h > maxH) maxH = h;
+            }
+            el.style.minHeight = maxH + 'px';
+            qTextHeightLocked = true;
+            el.textContent = Q[cq].t;
+        }
         function show(id) {
             document.querySelectorAll('.screen').forEach(function(s) {
                 s.classList.remove('active');
             });
             document.getElementById(id).classList.add('active');
         }
-
         function start() {
             cq = 0;
             R = {};
             show('sQ');
             document.getElementById('prog').classList.add('on');
             render();
+            setTimeout(lockQTextHeight, 50);
         }
-
         var dimOrder = ['batna','time','info','authority','need','relationship'];
-
         function getDimIndex(qIdx) {
             // Each dimension has 3 questions
             return Math.floor(qIdx / 3);
         }
-
         function getQInDim(qIdx) {
             // Position within current dimension (0, 1, or 2)
             return qIdx % 3;
         }
-
         function updateProgress() {
             // Update the big number
             document.getElementById('progNum').innerHTML = (cq + 1) + '<span> /18</span>';
-
             // Build pips: 18 total, grouped by dimension (3 per group, gap between groups)
             var html = '';
             for (var i = 0; i < Q.length; i++) {
@@ -1399,7 +1226,6 @@
             }
             document.getElementById('progPips').innerHTML = html;
         }
-
         function render() {
             var q = Q[cq], w = document.getElementById('qWrap');
             w.classList.remove('fade-in');
@@ -1415,7 +1241,6 @@
             document.getElementById('btnBack').style.visibility = cq === 0 ? 'hidden' : 'visible';
             adv = false;
         }
-
         function pick(id, v) {
             if(adv) return;
             R[id] = v;
@@ -1433,20 +1258,17 @@
                 }
             }, 300);
         }
-
         function back() {
             if(cq > 0) {
                 cq--;
                 render();
             }
         }
-
         function loading() {
             show('sLoad');
             document.getElementById('prog').classList.remove('on');
             setTimeout(results, 1300);
         }
-
         function calc() {
             var dk = ['batna', 'time', 'info', 'authority', 'need', 'relationship'], ds = {}, tr = 0;
             dk.forEach(function(k) {
@@ -1464,15 +1286,12 @@
                 dim: ds
             };
         }
-
         function gb(s) {
             return bands.find(function(b) { return s >= b.mn && s <= b.mx; }) || bands[0];
         }
-
         function dl(s) {
             return s >= 67 ? 'strong' : s >= 34 ? 'moderate' : 'weak';
         }
-
         var bcolors = {
             v: 'var(--red)',
             e: 'var(--orange)',
@@ -1481,7 +1300,6 @@
             s: 'var(--brand)',
             d: 'var(--brand-dark)'
         };
-
         function results() {
             var sc = calc(), b = gb(sc.agg);
             var colorMap = {
@@ -1504,7 +1322,6 @@
             show('sRes');
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
-
         function buildBd(sc) {
             var dk = ['batna', 'time', 'info', 'authority', 'need', 'relationship'], h = '';
             var colorMap = {
@@ -1525,7 +1342,6 @@
             });
             document.getElementById('bdContent').innerHTML = h;
         }
-
         function animBars() {
             document.querySelectorAll('.dr-fill').forEach(function(f) {
                 setTimeout(function() {
@@ -1533,7 +1349,6 @@
                 }, 80);
             });
         }
-
         function submitGate() {
             var em = document.getElementById('gEmail').value.trim();
             if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) {
@@ -1544,15 +1359,12 @@
             sendLead(em);
             reveal();
         }
-
         function skipGate() {
             reveal();
         }
-
         function reveal() {
             document.getElementById('gate').style.display = 'none';
             document.getElementById('bd').classList.add('on');
-
             // In iframe: pre-calculate height with all cards expanded BEFORE stagger animation
             // This sets the height floor so no individual card expansion triggers a resize
             if (window.self !== window.top) {
@@ -1575,12 +1387,10 @@
                 document.head.removeChild(noAnim);
                 void document.body.offsetHeight; // force layout before animations start
             }
-
             // Now add stagger animation and animate bars
             document.querySelectorAll('.dr').forEach(function(c) { c.classList.add('stagger'); });
             animBars();
         }
-
         function sendLead(em) {
             var sc = window._sc, b = gb(sc.agg);
             window.parent.postMessage({
@@ -1591,10 +1401,11 @@
                 source: 'NPD-Lite'
             }, '*');
         }
-
         function restart() {
             R = {};
             cq = 0;
+            qTextHeightLocked = false;
+            document.getElementById('qText').style.minHeight = '';
             document.getElementById('gate').style.display = 'block';
             document.getElementById('bd').classList.remove('on');
             document.getElementById('gEmail').value = '';
@@ -1602,22 +1413,18 @@
             show('sIntro');
             window.scrollTo({top: 0});
         }
-
         // ---- IFRAME HEIGHT MANAGEMENT ----
         var isIframed = (window.self !== window.top);
         var heightFloor = 0;
         var currentScreen = 'sIntro';
-
         if (isIframed) {
             var iframeStyle = document.createElement('style');
             iframeStyle.textContent = '.intro, .q-wrap { min-height: auto !important; } .q-wrap { min-height: 520px !important; }';
             document.head.appendChild(iframeStyle);
-
             // Ask parent to add transition to iframe for smooth height changes
             // This is the key fix: without transition, every height change is an instant reflow
             window.parent.postMessage({type: 'npd-init', transition: 'height 0.3s ease'}, '*');
         }
-
         var _origShow = show;
         show = function(id) {
             currentScreen = id;
@@ -1627,11 +1434,9 @@
             _origShow(id);
             postHeight();
         };
-
         function postHeight() {
             var el = document.querySelector('.wrap');
             var h = Math.max(el ? el.offsetHeight : 0, document.body.scrollHeight);
-
             if (isIframed) {
                 // Grow only: never shrink
                 if (h > heightFloor) {
@@ -1640,10 +1445,8 @@
                     h = heightFloor;
                 }
             }
-
             window.parent.postMessage({type: 'npd-height', height: h}, '*');
         }
-
         window.addEventListener('load', function() {
             postHeight();
             setInterval(postHeight, 300);
